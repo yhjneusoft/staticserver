@@ -24,8 +24,6 @@
             let latitude = position.coords.latitude;
             //获取经度
             let longitude = position.coords.longitude;
-            
-            alert(longitude+'，'+latitude);
 
             const pointBak = new BMap.Point(longitude, latitude);
             const convertor = new BMap.Convertor();
@@ -33,8 +31,6 @@
                 if (resPoint && resPoint.points && resPoint.points.length > 0) {
                     lng = resPoint.points[0].lng;
                     lat = resPoint.points[0].lat;
-                    
-                    alert(lng+'，'+lat);
 
                     // 创建地图实例 
                     var map = new BMapGL.Map("container");
