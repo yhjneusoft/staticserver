@@ -362,41 +362,62 @@ document.getElementById('play').onclick = function() {
 document.onkeydown = function (event) {
     switch (event.keyCode) {
         case 37:                   //向左
-            if (checkBox(x, y - 1))
-                y = y - 1;
-            setGrid();
+            zuo();
             break;
         case 39:                   //向右
-            if (checkBox(x, y + 1))
-                y = y + 1;
-            setGrid();
+            you();
             break;
         case 38:                   //旋转
-            temp = 0;
-            temp = boxType;
-            xuanzhuan();
-            setBox();
-            if (!checkBox(x, y))
-                boxType = temp;
-            setGrid();
+            shang();
             break;
         case 40:
-            if (checkBox(x + 1, y)) {
-                x = x + 1;
-            }
-            else {
-                if (checkStop()) {
-                    isOver = 0;
-                    clearTimeout(saveTime);
-                }
-                else {
-                    newBox();
-                }
-            }
-            setGrid();
-            sound('luo');
+            xia();
             break;
     }
+}
+
+document.getElementById('zuoBtn').onclick = zuo;
+document.getElementById('youBtn').onclick = you;
+document.getElementById('shangBtn').onclick = shang;
+document.getElementById('xiaBtn').onclick = xia;
+
+function shang(){
+    temp = 0;
+    temp = boxType;
+    xuanzhuan();
+    setBox();
+    if (!checkBox(x, y))
+        boxType = temp;
+    setGrid();
+}
+
+function zuo(){
+    if (checkBox(x, y - 1))
+    y = y - 1;
+    setGrid();
+}
+
+function you(){
+    if (checkBox(x, y + 1))
+    y = y + 1;
+    setGrid();
+}
+
+function xia(){
+    if (checkBox(x + 1, y)) {
+        x = x + 1;
+    }
+    else {
+        if (checkStop()) {
+            isOver = 0;
+            clearTimeout(saveTime);
+        }
+        else {
+            newBox();
+        }
+    }
+    setGrid();
+    sound('luo');
 }
 
 function sound(s) {
