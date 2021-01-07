@@ -30,7 +30,7 @@
             align-items: center;
         }
         .container .box .manage{
-            margin-top: 2vh;
+            margin: 2vh 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -44,7 +44,7 @@
             color: #fff;
             border-radius: 6px;
             margin-right: 8vw;
-            margin-bottom: 2vh;
+            font-size: 3.5vw;
             
             user-select: none;
             cursor: pointer;
@@ -63,6 +63,18 @@
             background-color: #D7E3DE;
             border-radius: 3px;
         }
+        .container .box .btn{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2vw;
+        }
+        .container .box .btn img{
+            width: 16vw;
+            height: 8vw;
+            margin: 0 2vw;
+        }
     </style>
 </head>
 <body>
@@ -71,7 +83,7 @@
         <div class="box">
             <div class="manage">
                 <p id="play">PLAY</p>
-                <span id="score">分数：0</span><br>
+                <span id="score">分数：0</span>
             </div>
             <table id="grid">
                 <tr><td><td><td><td><td><td><td><td><td><td></tr>
@@ -91,10 +103,17 @@
                 <tr><td><td><td><td><td><td><td><td><td><td></tr>
                 <tr><td><td><td><td><td><td><td><td><td><td></tr>
             </table>
+            <div class="btn">
+                <img src="./img/shang.png">
+            </div>
+            <div class="btn">
+                <img src="./img/zuo.png">
+                <img src="./img/xia.png">
+                <img src="./img/you.png">
+            </div>
         </div>
     </div>
 
-    <script src="./js/init.js"></script>
     <script src="./js/test03.js"></script>
 </body>
 </html>
