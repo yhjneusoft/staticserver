@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,body,.container{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .container img{
+           display: block;
+           width: 100vw;
+           height: 100wh;
+        }
+        .container .box{
+            width: 100vw;
+            height: 100wh;
+
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 2;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container .box .manage{
+            margin-top: 2vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container .box .manage p{
+            width: 18vw;
+            height: 8vw;
+            text-align: center;
+            line-height: 8vw;
+            background-color: #409EFF;
+            color: #fff;
+            border-radius: 6px;
+            margin-right: 8vw;
+            margin-bottom: 10px;
+            
+            user-select: none;
+            cursor: pointer;
+        }
+        .container .box .manage span{
+            font-size: 5vw;
+            color: #fff;
+        }
+        .container .box table {
+            border: solid 1vw#C7916D;
+            background-color:#E5CFA0;
+        }
+        .container .box table td {
+            width: 6vw;
+            height: 6vw;
+            background-color: #D7E3DE;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="./img/bg.jpg">
+        <div class="box">
+            <div class="manage">
+                <p id="play">PLAY</p>
+                <span id="score">分数：0</span><br>
+            </div>
+            <table id="grid">
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>    
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+                <tr><td><td><td><td><td><td><td><td><td><td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="./js/init.js"></script>
+    <script src="./js/test03.js"></script>
+</body>
+</html>
