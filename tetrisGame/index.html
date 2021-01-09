@@ -147,6 +147,9 @@
     </div>
 
     <script>
+        document.body.onselectstart=document.body.oncontextmenu=function(){
+            return false;
+        };
         //行
         let rows = 16;
         //列
@@ -240,8 +243,6 @@
                     xia();
                     break;
             }
-            event.stopPropagation();
-            event.preventDefault();
         }
 
         document.getElementById('zuoBtn').onclick = zuo;
