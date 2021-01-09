@@ -103,8 +103,40 @@
             font-weight: 900;
             color: #fff;
 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
             user-select: none;
             cursor: pointer;
+        }
+        .container .btn .triangle-xia{
+            width: 0;
+            height: 0;
+            border: 2vw solid transparent;
+            border-top-color: white ;
+            border-bottom: none;
+        }
+        .container .btn .triangle-shang{
+            width: 0;
+            height: 0;
+            border: 2vw solid transparent;
+            border-bottom-color: white ;
+            border-top: none;
+        }
+        .container .btn .triangle-zuo{
+            width: 0;
+            height: 0;
+            border: 2vw solid transparent;
+            border-right-color: white ;
+            border-left: none;
+        }
+        .container .btn .triangle-you{
+            width: 0;
+            height: 0;
+            border: 2vw solid transparent;
+            border-left-color: white ;
+            border-right: none;
         }
     </style>
 </head>
@@ -136,20 +168,25 @@
                     <p id="play">PLAY</p>
                     <span id="score">分数：0</span>
                 </div>
-                <div class="btn" id="shangBtn">&#8743;</div>
+                <div class="btn" id="shangBtn">
+                    <div class="triangle-shang"></div>
+                </div>
             </div>
             <div class="btn-box">
-                <div class="btn" id="zuoBtn">&#8592;</div>
-                <div class="btn" id="youBtn">&#8594;</div>
-                <div class="btn" id="xiaBtn">&#8744;</div>
+                <div class="btn" id="zuoBtn">
+                    <div class="triangle-zuo"></div>
+                </div>
+                <div class="btn" id="youBtn">
+                    <div class="triangle-you"></div>
+                </div>
+                <div class="btn" id="xiaBtn">
+                    <div class="triangle-xia"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        document.body.onselectstart=document.body.oncontextmenu=function(){
-            return false;
-        };
         //行
         let rows = 16;
         //列
