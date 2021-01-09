@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        html,body,.container,p{
+        html,body,div,p{
             margin: 0;
             padding: 0;
+        }
+        .container {
             width: 100%;
             height: 100%;
         }
-        .container img{
-           display: block;
-           width: 100%;
-           height: 100vh;
-        }
-        .container .box{
+
+        .container img {
+            display: block;
             width: 100%;
             height: 100vh;
+        }
+
+        .container .box {
+            width: 100%;
+            height: 100vh;
+            margin-top: 5vw;
 
             position: absolute;
             left: 0;
@@ -29,62 +35,79 @@
             flex-direction: column;
             align-items: center;
         }
-        .container .box .manage{
+
+        .container .box .manage {
+            width: 80vw;
             margin: 2vh 0;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
         }
-        .container .box .manage p{
+
+        .container .box .manage .play-score{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container .box .manage p {
             width: 18vw;
             height: 8vw;
             text-align: center;
             line-height: 8vw;
-            background-color: #409EFF;
+            background-color:#67C23A;
             color: #fff;
             border-radius: 6px;
-            margin-right: 8vw;
+            margin-right:4vw;
             font-size: 3.5vw;
-            
+
             user-select: none;
             cursor: pointer;
         }
-        .container .box .manage span{
+
+        .container .box .manage span {
             font-size: 5vw;
             color: #fff;
         }
+
         .container .box table {
             border: solid 1vw#C7916D;
-            background-color:#E5CFA0;
+            background-color: #E5CFA0;
         }
+
         .container .box table td {
             width: 5vw;
             height: 5vw;
             background-color: #D7E3DE;
             border-radius: 3px;
         }
-        .container .box .btn{
-            width: 100%;
+
+        .container .box .btn-box{
+            width: 80vw;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            margin-top: 3vw;
         }
-        .container .box .btn img{
-            width: 16vw;
-            height: 9vw;
-            margin: 0 2vw;
+
+        .container .box .btn{
+            width: 18vw;
+            height: 8vw;
+            background-color:#409EFF;
+            border-radius: 4vw;
+            box-shadow: 2px 2px 5px #000;
+
+            text-align: center;
+            line-height: 8vw;
+            font-size: 24px;
+            color: #fff;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <img src="./img/bg.jpg">
         <div class="box">
-            <div class="manage">
-                <p id="play">PLAY</p>
-                <span id="score">分数：0</span>
-            </div>
             <table id="grid">
                 <tr><td><td><td><td><td><td><td><td><td><td></tr>
                 <tr><td><td><td><td><td><td><td><td><td><td></tr>
@@ -103,17 +126,473 @@
                 <tr><td><td><td><td><td><td><td><td><td><td></tr>
                 <tr><td><td><td><td><td><td><td><td><td><td></tr>
             </table>
-            <div class="btn">
-                <img src="./img/shang.png" id="shangBtn">
+            <div class="manage">
+                <div class="play-score">
+                    <p id="play">PLAY</p>
+                    <span id="score">分数：0</span>
+                </div>
+                <div class="btn" id="shangBtn">&#8743;</div>
             </div>
-            <div class="btn">
-                <img src="./img/zuo.png" id="zuoBtn">
-                <img src="./img/xia.png" id="xiaBtn">
-                <img src="./img/you.png" id="youBtn">
+            <div class="btn-box">
+                <div class="btn" id="zuoBtn">&#8592;</div>
+                <div class="btn" id="youBtn">&#8594;</div>
+                <div class="btn" id="xiaBtn">&#8744;</div>
             </div>
         </div>
     </div>
 
-    <script src="./js/test03.js"></script>
+    <script>
+        //行
+        let rows = 16;
+        //列
+        let cols = 10;
+        //方块的x坐标
+        let x = 0;
+        //方块的y坐标
+        let y = 3;
+        //随机产生1-7种方块
+        let boxType = 0;
+        //随机产生方块颜色
+        let boxColor = 0;
+        //方块数字地图
+        let boxMap = [[0, 0], [0, 0], [0, 0], [0, 0]];
+        //保存方块类型
+        let temp = 0;
+        //保存定时器
+        let saveTime = null;
+        //玩家分数
+        let num = 0;
+        //时间频率
+        let time = 1000;
+        //方块下落是否结束  0:结束  1：未结束
+        //var isOver = 0;
+        //游戏是否结束  0:结束  1：未结束
+        let gameOver = 0;
+        //得分
+        let score = document.getElementById('score');
+
+        //表格数字地图
+        let gridMap =
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ];
+
+        //颜色列表 [背景颜色，方块颜色，方块堆颜色]
+        let colors = ["#D7E3DE", "#409EFF", "#67C23A", "#E6A23C", "#F56C6C", "#409EFF", "#67C23A", "#E6A23C", "#F56C6C"];
+        //表格对象
+        let htmlGrid;
+
+        //开始
+        document.getElementById('play').onclick = function () {
+            if (gameOver == 0) {
+                gameOver = 1;
+            }
+            x = -1;
+            y = 3;
+            boxType = Math.floor(Math.random() * 7) + 1;
+            boxColor = Math.floor(Math.random() * 4) + 1;
+            num = 0;
+            time = 1000;
+            score.innerHTML = '分数：' + num;
+
+            //地图全部清空
+            clearGrid();
+            //块出现并向下
+            boxDown();
+
+            if (saveTime == null) {
+                saveTime = setInterval(boxDown, time);
+            }
+        }
+
+        document.onkeydown = function (event) {
+            switch (event.keyCode) {
+                case 37:                   //向左
+                    zuo();
+                    break;
+                case 39:                   //向右
+                    you();
+                    break;
+                case 38:                   //旋转
+                    shang();
+                    break;
+                case 40:                   //向下
+                    xia();
+                    break;
+            }
+        }
+
+        document.getElementById('zuoBtn').onclick = zuo;
+        document.getElementById('youBtn').onclick = you;
+        document.getElementById('shangBtn').onclick = shang;
+        document.getElementById('xiaBtn').onclick = xia;
+
+        function shang(){
+            if (gameOver == 1) {
+                //先将当前块保存
+                temp = boxType;
+                //然后旋转，得出旋转后的块
+                xuanzhuan();
+                //设置旋转后的块
+                setBox();
+                //然后判断是否可以旋转，如果不可以，就重置会原来的块
+                if (!checkBox(x, y)){
+                    boxType = temp;
+                }
+                setGrid();
+            }
+        }
+
+        function zuo(){
+            if (gameOver == 1) {
+                if (checkBox(x, y - 1)){
+                    y -= 1;
+                }
+                setGrid();
+            }
+        }
+
+        function you(){
+            if (gameOver == 1) {
+                if (checkBox(x, y + 1)){
+                    y += 1;
+                }
+                setGrid();
+            }
+        }
+
+        function xia(){
+            if (gameOver == 1) {
+                if(saveTime!=null){
+                    clearInterval(saveTime);
+                    saveTime = null;
+                }
+                boxDown();
+                if (saveTime == null) {
+                    saveTime = setInterval(boxDown, time);
+                }
+            }   
+        }
+
+        //块出现并向下
+        function boxDown() {
+            //游戏是否结束判断
+            if (checkStop()) {
+                gameOver = 0;
+                clearInterval(saveTime);
+                saveTime = null;
+            } else {
+                //判断是否可以下落
+                if (checkBox(x + 1, y)) {
+                    x++;
+                } else {
+                    newBox();  //不可用下落就产生新方块
+                }
+            }
+            setGrid();
+            sound('luo');
+        }
+
+        //设置表格并画表格
+        function setGrid() {
+            setBox();
+
+            //在表格上设置方块
+            gridMap[x + boxMap[0][0]][y + boxMap[0][1]] = boxColor;
+            gridMap[x + boxMap[1][0]][y + boxMap[1][1]] = boxColor;
+            gridMap[x + boxMap[2][0]][y + boxMap[2][1]] = boxColor;
+            gridMap[x + boxMap[3][0]][y + boxMap[3][1]] = boxColor;
+
+            //在表格上画方块
+            drawGrid();
+
+            //清除方块
+            for (var i = 0; i < rows; i++) {
+                for (var j = 0; j < cols; j++) {
+                    if (gridMap[i][j] < 5)
+                        gridMap[i][j] = 0;
+                }
+            }
+        }
+
+        //产生新方块
+        function newBox() {
+            //将落到底部的方块设置成方块堆
+            gridMap[x + boxMap[0][0]][y + boxMap[0][1]] = boxColor + 4;
+            gridMap[x + boxMap[1][0]][y + boxMap[1][1]] = boxColor + 4;
+            gridMap[x + boxMap[2][0]][y + boxMap[2][1]] = boxColor + 4;
+            gridMap[x + boxMap[3][0]][y + boxMap[3][1]] = boxColor + 4;
+            //清除满格
+            clearFull();
+            x = 0;
+            y = 3;
+            boxType = Math.floor(Math.random() * 7) + 1;
+            boxColor = Math.floor(Math.random() * 4) + 1;
+        }
+
+        //清除满格
+        function clearFull() {
+            //保存清除的行数
+            var k = 0;
+            for (var i = rows - 1; i >= 0; i--) {
+                while (checkFull(i)) {
+                    k++;
+                    for (var row = i; row > 0; row--) {
+                        for (var cl = 0; cl < cols; cl++) {
+                            gridMap[row][cl] = gridMap[row - 1][cl];
+                        }
+                    }
+                    sound('xiao');
+                }
+            }
+
+            //设置玩家分数
+            if (k == 1)
+                num += 10;
+            else if (k == 2)
+                num += 30;
+            else if (k == 3)
+                num += 50;
+            else if (k == 4)
+                num += 80;
+
+            //设置时间频率	 
+            if (num >= 100 && num < 200)
+                time = 800;
+            else if (num >= 200 && num < 300)
+                time = 600;
+            else if (num >= 300 && num < 400)
+                time = 400;
+            else if (num >= 400 && num < 500)
+                time = 200;
+            else if (num >= 500 && num < 600)
+                time = 100;
+
+            //更新分数	 
+            score.innerHTML = '分数：' + num;
+        }
+
+        //检查是否满格
+        function checkFull(row) {
+            for (var i = 0; i < cols; i++) {
+                if (gridMap[row][i] < 5) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        //游戏是否结束判断
+        function checkStop() {
+            //第一行和第二行已经有方块堆时，游戏停止。
+            for (let i = 0; i < 2; i++) {
+                for (let j = 0; j < cols; j++) {
+                    if (gridMap[i][j] >= 5) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        //检查方块是否在允许的运动范围之内
+        function checkBox(a, b) {
+            //下落到底部的验证
+            if (a + boxMap[0][0] >= rows || a + boxMap[1][0] >= rows || a + boxMap[2][0] >= rows || a + boxMap[3][0] >= rows) {
+                return false;
+            }
+            //两边框不能超出验证
+            if (b + boxMap[0][1] <= -1 || b + boxMap[0][1] >= cols) {
+                return false;
+            } else if (b + boxMap[1][1] <= -1 || b + boxMap[1][1] >= cols) {
+                return false;
+            } else if (b + boxMap[2][1] <= -1 || b + boxMap[2][1] >= cols) {
+                return false;
+            } else if (b + boxMap[3][1] <= -1 || b + boxMap[3][1] >= cols) {
+                return false;
+            }
+            //是否下落到方块堆的验证
+            if (gridMap[a + boxMap[0][0]][b + boxMap[0][1]] >= 5) {
+                return false;
+            }
+            else if (gridMap[a + boxMap[1][0]][b + boxMap[1][1]] >= 5) {
+                return false;
+            }
+            else if (gridMap[a + boxMap[2][0]][b + boxMap[2][1]] >= 5) {
+                return false;
+            }
+            else if (gridMap[a + boxMap[3][0]][b + boxMap[3][1]] >= 5) {
+                return false;
+            }
+            return true;
+        }
+
+        //地图全部清空
+        function clearGrid() {
+            for (var i = 0; i < rows; i++) {
+                for (var j = 0; j < cols; j++) {
+                    gridMap[i][j] = 0;
+                }
+            }
+        }
+
+        //画表格
+        function drawGrid() {
+            //取得表格对象
+            htmlGrid = document.getElementById("grid");
+            //根据表格数字地图(gridMap[][])画表格
+            for (var i = 0; i < rows; i++) {
+                for (var j = 0; j < cols; j++) {
+                    htmlGrid.rows[i].cells[j].style.backgroundColor = colors[gridMap[i][j]];
+                }
+            }
+        }
+
+        //设置方块数字地图,共19种(包括旋转后的方块)
+        function setBox() {
+            switch (boxType) {
+                case 1:        //棍
+                    boxMap = [[0, 0], [0, 1], [0, 2], [0, 3]];
+                    break;
+                case 11:
+                    boxMap = [[0, 0], [1, 0], [2, 0], [3, 0]];
+                    break;
+                case 2:        //方块
+                    boxMap = [[0, 0], [0, 1], [1, 0], [1, 1]];
+                    break;
+                case 3:        //反L型
+                    boxMap = [[0, 0], [0, 1], [0, 2], [1, 2]];
+                    break;
+                case 31:
+                    boxMap = [[0, 1], [1, 1], [2, 1], [2, 0]];
+                    break;
+                case 32:
+                    boxMap = [[0, 0], [1, 0], [1, 1], [1, 2]];
+                    break;
+                case 33:
+                    boxMap = [[0, 0], [0, 1], [1, 0], [2, 0]];
+                    break;
+                case 4:        //L型
+                    boxMap = [[0, 0], [0, 1], [0, 2], [1, 0]];
+                    break;
+                case 41:
+                    boxMap = [[0, 0], [0, 1], [1, 1], [2, 1]];
+                    break;
+                case 42:
+                    boxMap = [[1, 0], [1, 1], [1, 2], [0, 2]];
+                    break;
+                case 43:
+                    boxMap = [[0, 0], [1, 0], [2, 0], [2, 1]];
+                    break;
+                case 5:        //Z型
+                    boxMap = [[0, 0], [0, 1], [1, 1], [1, 2]];
+                    break;
+                case 51:
+                    boxMap = [[0, 1], [1, 1], [1, 0], [2, 0]];
+                    break;
+                case 6:        //反Z型
+                    boxMap = [[1, 0], [0, 1], [1, 1], [0, 2]];
+                    break;
+                case 61:
+                    boxMap = [[0, 0], [1, 0], [1, 1], [2, 1]];
+                    break;
+                case 7:        //T型
+                    boxMap = [[0, 1], [1, 0], [1, 1], [1, 2]];
+                    break;
+                case 71:
+                    boxMap = [[0, 0], [1, 0], [1, 1], [2, 0]];
+                    break;
+                case 72:
+                    boxMap = [[0, 0], [0, 1], [0, 2], [1, 1]];
+                    break;
+                case 73:
+                    boxMap = [[1, 0], [0, 1], [1, 1], [2, 1]];
+                    break;
+            }
+        }
+
+        //旋转
+        function xuanzhuan() {
+            switch (boxType) {
+                case 1:
+                    boxType = 11;
+                    break;
+                case 11:
+                    boxType = 1;
+                    break;
+                case 2:
+                    boxType = 2;
+                    break;
+                case 3:
+                    boxType = 31;
+                    break;
+                case 31:
+                    boxType = 32;
+                    break;
+                case 32:
+                    boxType = 33;
+                    break;
+                case 33:
+                    boxType = 3;
+                    break;
+                case 4:
+                    boxType = 41;
+                    break;
+                case 41:
+                    boxType = 42;
+                    break;
+                case 42:
+                    boxType = 43;
+                    break;
+                case 43:
+                    boxType = 4;
+                    break;
+                case 5:
+                    boxType = 51;
+                    break;
+                case 51:
+                    boxType = 5;
+                    break;
+                case 6:
+                    boxType = 61;
+                    break;
+                case 61:
+                    boxType = 6;
+                    break;
+                case 7:
+                    boxType = 71;
+                    break;
+                case 71:
+                    boxType = 72;
+                    break;
+                case 72:
+                    boxType = 73;
+                    break;
+                case 73:
+                    boxType = 7;
+                    break;
+            }
+        }
+
+        function sound(s) {
+            new Audio('music/' + s + '.mp3').play();
+        }
+    </script>
 </body>
+
 </html>
