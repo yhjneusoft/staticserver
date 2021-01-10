@@ -62,21 +62,32 @@ html,body,.container{
 }
 .container .progress .progress-box{
     flex: 6;
-}
-.container .progress .progress-box input{
     width: 100%;
-    margin-top: 1.1vw;
-
-    height: 3px;
-    background: #0075FF, #ddd;  /*背景颜色*/ 
+    height: 0.7vw;
+    background-color: #888;
+    position: relative;
 }
+.container .progress .progress-box .bar{
+    width: 50%;
+    height: 0.7vw;
+    background-color:#2FC27D;
+}
+.container .progress .progress-box .bar-header{
+    width: 4vw;
+    height: 4vw;
+    background-color:#2FC27D;
+    border-radius: 2vw;
 
+    position: absolute;
+    left: 50%;
+    top: -1.7vw;
+}
 
 /************************ controller 控制台 ***********************/
 .container .controller{
     width: 100%;
     height: 20vw;
-    color: #0075FF;
+    color: #2FC27D;
     font-size: 4.5vw;
 
     display: flex;
@@ -89,7 +100,7 @@ html,body,.container{
     margin: 0 5vw;
     border-radius: 5vw;
     box-sizing: border-box;
-    border: solid 2px #0075FF;
+    border: solid 2px#2FC27D;
 
     display: flex;
     justify-content: center;
