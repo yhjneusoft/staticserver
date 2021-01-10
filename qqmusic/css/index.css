@@ -124,6 +124,28 @@ html,body,.container{
     left: 50%;
     top: -1.7vw;
 }
+.container .progress .loop{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+.container .progress .loop p{
+    width: 10vw;
+    height: 6vw;
+    font-size: 2vw;
+    border-radius: 3vw;
+    box-sizing: border-box;
+
+    /* color: #2FC27D;
+    border: solid 1px #2FC27D; */
+
+    color: #888;
+    border: solid 1px #888;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /************************ controller 控制台 ***********************/
 .container .controller{
