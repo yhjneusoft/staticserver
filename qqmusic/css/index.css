@@ -30,3 +30,11 @@ html,body,.container{
     font-size: 20px;
     color: #DDD;
 }
+
+.container .logo{
+    width: 50vw;
+    height: 50vw;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20vw;
+}
