@@ -1,3 +1,4 @@
+/************************ 容器 ***********************/
 html,body,ul,li,p{
     margin: 0;
     padding: 0;
@@ -11,6 +12,8 @@ html,body,.container{
     background-repeat: no-repeat;
     background-size:100%;
 }
+
+/************************ header 头部 ***********************/
 .container header{
     width: 100%;
     height: 14vw;
@@ -31,10 +34,67 @@ html,body,.container{
     color: #DDD;
 }
 
+/************************ logo 图片 ***********************/
 .container .logo{
     width: 50vw;
     height: 50vw;
     display: block;
     margin: 0 auto;
-    margin-top: 20vw;
+    margin-top: 16vw;
+}
+
+/************************ progress 进度条 ***********************/
+.container .progress{
+    width: 100%;
+    height: 8vw;
+    box-sizing: border-box;
+    padding: 0 3vw;
+    margin-top: 16vw;
+
+    display: flex;
+    align-items: center;
+}
+.container .progress .begin,.container .progress .end{
+    flex: 1;
+    font-size: 3.2vw;
+    color: #AAA;
+    text-align: center;
+}
+.container .progress .progress-box{
+    flex: 6;
+}
+.container .progress .progress-box input{
+    width: 100%;
+    margin-top: 1.1vw;
+}
+
+/************************ controller 控制台 ***********************/
+.container .controller{
+    width: 100%;
+    height: 20vw;
+    color: #0075FF;
+    font-size: 4.5vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container .controller > div{
+    width: 10vw;
+    height: 10vw;
+    margin: 0 5vw;
+    border-radius: 5vw;
+    box-sizing: border-box;
+    border: solid 2px #0075FF;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.container .controller > div:nth-child(2){
+    width: 14vw;
+    height: 14vw;
+    font-size: 6vw;
+    border-radius: 7vw;
 }
