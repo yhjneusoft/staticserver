@@ -25,12 +25,12 @@ html,body,.container{
     align-items: center;
 }
 .container header i{
-    font-size: 24px;
+    font-size: 5.4vw;
     color: #fff;
     opacity: .7;
 }
 .container header p{
-    font-size: 20px;
+    font-size: 4.6vw;
     color: #DDD;
 }
 
