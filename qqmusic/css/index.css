@@ -132,7 +132,7 @@ html,body,.container{
 .container .progress .loop p{
     width: 10vw;
     height: 6vw;
-    font-size: 2vw;
+    font-size: 3vw;
     border-radius: 3vw;
     box-sizing: border-box;
 
@@ -141,6 +141,8 @@ html,body,.container{
 
     color: #888;
     border: solid 1px #888;
+    user-select: none;
+    cursor: pointer;
 
     display: flex;
     justify-content: center;
