@@ -644,11 +644,13 @@
             new Audio('music/' + s + '.mp3').play();
         }
 
-        document.getElementById('bg').ontouchstart = function(){  
-            return false;   
+        document.getElementById('bg').ontouchstart = function(event){  
+            event.stopPropagation();
+            event.preventDefault();
         }
         document.getElementById('bg').ontouchend = function(){  
-            return false;      
+            event.stopPropagation();
+            event.preventDefault();
         }
     </script>
 </body>
