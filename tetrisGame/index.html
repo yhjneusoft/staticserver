@@ -148,7 +148,7 @@
 
 <body>
     <div class="container">
-        <img src="./img/bg.jpg">
+        <img src="./img/bg.jpg" id="bg">
         <div class="box">
             <div class="dingban"></div>
             <table id="grid">
@@ -642,6 +642,13 @@
 
         function sound(s) {
             new Audio('music/' + s + '.mp3').play();
+        }
+
+        document.getElementById('bg').ontouchstart = function(){  
+            return false;   
+        }
+        document.getElementById('bg').ontouchend = function(){  
+            return false;      
         }
     </script>
 </body>
