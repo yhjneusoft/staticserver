@@ -114,6 +114,11 @@
             user-select: none;
             cursor: pointer;
         }
+        .container .box .btn:hover{
+            position: relative;
+            left:1px;
+            top:1px;
+        }
         /*四个三角箭头*/
         .container .btn .triangle-xia{
             width: 0;
@@ -644,14 +649,6 @@
             new Audio('music/' + s + '.mp3').play();
         }
 
-        document.getElementById('bg').ontouchstart = function(event){  
-            event.stopPropagation();
-            event.preventDefault();
-        }
-        document.getElementById('bg').ontouchend = function(){  
-            event.stopPropagation();
-            event.preventDefault();
-        }
     </script>
 </body>
 
