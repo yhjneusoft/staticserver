@@ -40,7 +40,7 @@ html,body,.container{
     height: 50vw;
     display: block;
     margin: 0 auto;
-    margin-top: 16vw;
+    margin-top: 20vw;
 }
 
 /************************ progress 进度条 ***********************/
@@ -49,7 +49,7 @@ html,body,.container{
     height: 8vw;
     box-sizing: border-box;
     padding: 0 3vw;
-    margin-top: 16vw;
+    margin-top: 20vw;
 
     display: flex;
     align-items: center;
