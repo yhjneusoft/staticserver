@@ -35,54 +35,53 @@ html,body,.container{
     color: #DDD;
 }
 
-/************************ logo+lyric 图片+歌词 ***********************/
+/************************ logo 图片 ***********************/
 .container .logo{
     width: 100%;
-    height: 80vw;
-    box-sizing: border-box;
-    padding: 0 10vw;
-
+    height: 50vw;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .container .logo img{
     width: 50vw;
-    height: 50vw;
+    height: 40vw;
 }
-.container .logo .lyric{
-    position: absolute;
+
+/************************ lyric 歌词 ***********************/
+.container .lyric{
+    width: 100%;
 }
-.container .logo .lyric ul{
+.container .lyric ul{
     width: 100%;
     list-style: none;
 }
-.container .logo .lyric ul li{
+.container .lyric ul li{
     width: 100%;
     text-align: center;
     line-height: 10vw;
     font-size: 4vw;
     color: #fff;
 }
-.container .logo .lyric ul li:nth-child(1){
+.container .lyric ul li:nth-child(1){
     opacity: 0.3;
 }
-.container .logo .lyric ul li:nth-child(2){
+.container .lyric ul li:nth-child(2){
     opacity: 0.5;
 }
-.container .logo .lyric ul li:nth-child(3){
+.container .lyric ul li:nth-child(3){
     opacity: 0.8;
 }
-.container .logo .lyric ul li:nth-child(4){
+.container .lyric ul li:nth-child(4){
     color: #2FC27D;
 }
-.container .logo .lyric ul li:nth-child(5){
+.container .lyric ul li:nth-child(5){
     opacity: 0.8;
 }
-.container .logo .lyric ul li:nth-child(6){
+.container .lyric ul li:nth-child(6){
     opacity: 0.5;
 }
-.container .logo .lyric ul li:nth-child(7){
+.container .lyric ul li:nth-child(7){
     opacity: 0.3;
 }
 
@@ -155,17 +154,4 @@ html,body,.container{
     font-size: 6vw;
     border-radius: 7vw;
 }
-
-/************************ music-list 歌曲列表 ***********************/
-.container > ul{
-    width: 100%;
-    margin-top: 3vw;
-}
-.container > ul li{
-    width: 100%;
-    height: 12vw;
-    background-color: #000;
-    opacity: 0.2;
-    border-top: dotted 1px #EEE;
-} 
 
