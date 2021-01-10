@@ -67,22 +67,10 @@ html,body,.container{
     width: 100%;
     margin-top: 1.1vw;
 
-    margin-top: 8px;/*上部分的填充值*/
-    outline: none; 
-    -webkit-appearance: none;/*清除系统默认样式*/  
-    width:100% !important;  
-    background: -webkit-linear-gradient(#ffc107, #ffc107) no-repeat, #ddd;  /*背景颜色，俩个颜色分别对应上下，自己尝试下就知道了嗯*/
-    background-size: 33% 100%;/*设置左右宽度比例*/  
-    height: 3px;/*横条的高度，细的真的比较好看嗯*/  
+    height: 3px;
+    background: #0075FF, #ddd;  /*背景颜色*/ 
 }
-.container .progress .progress-box input::-webkit-slider-thumb {  
-    -webkit-appearance: none;/*清除系统默认样式*/  
-    height:16px;/*拖动块高度*/  
-    width: 16px;/*拖动块宽度*/  
-    background: #f8f9fa;/*拖动块背景*/ 
-    border-radius: 50%; /*外观设置为圆形*/  
-    border: solid 1px #ddd; /*设置边框*/  
-}
+
 
 /************************ controller 控制台 ***********************/
 .container .controller{
