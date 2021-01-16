@@ -104,12 +104,17 @@ window.onload = function(){
         let icon = this.getElementsByTagName('i')[0];
         if(icon.className=='fa fa-play'){
             audio.play();
+            audio.oncanplay = fn();
             icon.className='fa fa-pause';
         }else{
             audio.pause();
             icon.className='fa fa-play';
         }
         event.stopPropagation();
+    }
+
+    function fn(){
+        alert('aaa');
     }
 
     //是否循环播放按钮
