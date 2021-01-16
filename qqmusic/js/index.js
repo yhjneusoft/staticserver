@@ -19,89 +19,6 @@ window.onload = function(){
     //当前歌词列表中的每一句歌词的索引
     let indexLi = 0;
 
-    //音乐播放列表
-    let musicArr = [
-        {
-            id:1,
-            name:'送你一朵小红花',
-            lyric:'赵英俊',
-            song:'赵英俊',
-            sing:'赵英俊',
-            url:'snydxhh.mp3',
-            img:'snydxhh.png',
-            lyricArr:[
-                {time:'00:01',lyric:'送你一朵小红花'},
-                {time:'00:10',lyric:'送你一朵小红花'},
-                {time:'00:13',lyric:'开在你昨天新长的枝桠'},
-                {time:'00:19',lyric:'奖励你有勇气 主动来和我说话'},
-                {time:'00:28',lyric:'不共戴天的冰水啊'},
-                {time:'00:33',lyric:'义无反顾的烈酒啊'},
-                {time:'00:37',lyric:'多么苦难的日子里'},
-                {time:'00:42',lyric:'你都已战胜了它'},
-                {time:'00:49',lyric:'送你一朵小红花'},
-                {time:'00:52',lyric:'遮住你今天新添的伤疤'},
-                {time:'00:58',lyric:'奖励你在下雨天 还愿意送我回家'},
-                {time:'01:08',lyric:'科罗拉多的风雪啊'},
-                {time:'01:13',lyric:'喜马拉雅的骤雨啊'},
-                {time:'01:17',lyric:'只要你相信我 闭上眼就能到达'},
-                {time:'01:49',lyric:'送你一朵小红花'},
-                {time:'01:53',lyric:'开在那牛羊遍野的天涯'},
-                {time:'01:59',lyric:'奖励你走到哪儿 都不会忘记我呀'},
-                {time:'02:08',lyric:'洁白如雪的沙滩啊'},
-                {time:'02:12',lyric:'风平浪静的湖水啊'},
-                {time:'02:17',lyric:'那些真实的幻影啊'},
-                {time:'02:21',lyric:'是我给你的牵挂'},
-                {time:'02:26',lyric:'送你一朵小红花'},
-                {time:'02:29',lyric:'开在你心底最深的泥沙'},
-                {time:'02:35',lyric:'奖励你能感受 每个命运的挣扎'},
-                {time:'02:44',lyric:'是谁挥霍的时光啊'},
-                {time:'02:49',lyric:'是谁苦苦的奢望啊'},
-                {time:'02:54',lyric:'这不是一个问题'},
-                {time:'02:58',lyric:'也不需要你的回答'},
-                {time:'03:03',lyric:'送你一朵小红花'},
-                {time:'03:12',lyric:'送你一朵小红花'},
-                {time:'03:22',lyric:'送你一朵小红花'},
-                {time:'03:31',lyric:'送你一朵小红花'},
-                {time:'03:40',lyric:'送你一朵小红花'}
-            ]
-        },{
-            id:2,
-            name:'一起走过的日子',
-            lyric:'梁小美',
-            song:'胡伟立',
-            sing:'刘德华',
-            url:'yqzgdrz.mp3',
-            img:'yqzgdrz.png',
-            lyricArr:[
-                {time:'00:14',lyric:'如何面对 曾一起走过的日子'},
-                {time:'00:21',lyric:'现在剩下我独行 如何用心声一一讲你知'},
-                {time:'00:28',lyric:'从来没人明白我 唯一你给我好日子'},
-                {time:'00:35',lyric:'有你有我有情有生有死有义'},
-                {time:'00:42',lyric:'多少风波都愿闯 只因彼此不死的目光'},
-                {time:'00:49',lyric:'有你有我有情有天有海有地'},
-                {time:'00:56',lyric:'不可猜测总有天意 才珍惜相处的日子'},
-                {time:'01:03',lyric:'道别话亦未多讲 只抛低这个伤心的汉子'},
-                {time:'01:17',lyric:'沉沉睡了 谁分享今生的日子'},
-                {time:'01:24',lyric:'活着但是没灵魂 才明白生死之间的意思'},
-                {time:'01:31',lyric:'情浓完全明白了 才甘心披上孤独衣'},
-                {time:'01:38',lyric:'有你有我有情有天有海有地'},
-                {time:'01:45',lyric:'当天一起不自知 分开方知根本心极痴'},
-                {time:'01:52',lyric:'有你有我有情有生有死有义'},
-                {time:'02:00',lyric:'只想解释当我不智 如今想倾诉讲谁知'},
-                {time:'02:07',lyric:'剩下绝望旧身影 今只得千亿伤心的句子'},
-                {time:'02:21',lyric:'沉沉睡了 谁分享今生的日子'},
-                {time:'02:28',lyric:'活着但是没灵魂 才明白生死之间的意思'},
-                {time:'02:35',lyric:'情浓完全明白了 才甘心披上孤独衣'},
-                {time:'02:42',lyric:'有你有我有情有天有海有地'},
-                {time:'02:49',lyric:'当天一起不自知 分开方知根本心极痴'},
-                {time:'02:56',lyric:'有你有我有情有生有死有义'},
-                {time:'03:03',lyric:'只想解释当我不智 如今想倾诉讲谁知'},
-                {time:'03:10',lyric:'剩下绝望旧身影 今只得千亿伤心的句子'},
-                {time:'03:17',lyric:'剩下绝望旧身影 今只得千亿伤心的句子'}
-            ]
-        }
-    ];
-
     //创建audio对象
     let audio = document.createElement('audio');
     document.body.appendChild(audio);
@@ -200,7 +117,7 @@ window.onload = function(){
         let count = 0;    //动画一共4帧
 
         let interval = setInterval(()=>{
-            scroll.style.top = scroll.offsetTop - liHeight/4 + 'px';
+            scroll.style.top = Math.round(scroll.offsetTop - liHeight/4) + 'px';
             count++;
             if(count>=4){
                 clearInterval(interval);
