@@ -12,7 +12,7 @@
     <div class="container">
         <header>
             <i class="fa fa-music"></i>
-            <p id="musicName"></p>
+            <p id="musicNameP"></p>
             <i class="fa fa-navicon" id="musicShowBtn"></i>
             <div class="music" id="musicListBox">
                 <ul>
@@ -27,15 +27,15 @@
             </ul>
         </div>
         <div class="logo">
-            <img src="" id="logo">
+            <img src="" id="logoImg">
         </div>
         <div class="progress">
-            <div class="begin">01:33</div>
+            <div class="begin" id="beginTimeText"></div>
             <div class="progress-box">
                 <div class="bar"></div>
                 <div class="bar-header"></div>
             </div>
-            <div class="end">03:15</div>
+            <div class="end" id="endTimeText"></div>
         </div>
         <div class="controller">
             <div></div>
@@ -44,7 +44,6 @@
             </div>
             <div>
                 <p id="playBtn"><i class="fa fa-play"></i></p>
-                <!-- <p><i class="fa fa-pause"></i></p> -->
             </div>
             <div>
                 <p id="forwardBtn"><i class="fa fa-step-forward"></i></p>

@@ -85,10 +85,15 @@ html,body,.container{
     height: 56vw;
     margin: 3vw 0 1vw;
     overflow: hidden;
+    position: relative;
 }
 .container .lyric ul{
     width: 100%;
     list-style: none;
+
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 .container .lyric ul li{
     width: 100%;
@@ -96,6 +101,7 @@ html,body,.container{
     line-height: 8vw;
     font-size: 4vw;
     color: #fff;
+    opacity: 0.3;
 }
 .container .lyric ul li:nth-child(1){
     opacity: 0.3;
@@ -108,6 +114,7 @@ html,body,.container{
 }
 .container .lyric ul li:nth-child(4){
     color: #2FC27D;
+    opacity: 1;
 }
 .container .lyric ul li:nth-child(5){
     opacity: 0.7;
