@@ -3,16 +3,16 @@ window.onload = function(){
     let backBtn = document.getElementById('backBtn');        //后退按钮
     let forwardBtn = document.getElementById('forwardBtn');  //前进按钮
     let loopBtn = document.getElementById('loopBtn');        //是否循环播放按钮
-    let logoImg = document.getElementById('logoImg');              //歌曲对应的图片标签
-    let musicNameP = document.getElementById('musicNameP');    //显示歌曲名称标签
+    let logoImg = document.getElementById('logoImg');        //歌曲对应的图片标签
+    let musicNameP = document.getElementById('musicNameP');  //显示歌曲名称标签
 
     let musicShowBtn = document.getElementById('musicShowBtn');      //播放列表是否显示按钮
     let musicListBox = document.getElementById('musicListBox');      //播放列表块
 
-    let lyricBox = document.getElementById('lyricBox');       //滚动歌词块
+    let lyricBox = document.getElementById('lyricBox');              //滚动歌词块
 
     let beginTimeText = document.getElementById('beginTimeText');    //歌曲开始播放时间标签
-    let endTimeText = document.getElementById('endTimeText');    //歌曲开始播放时间标签
+    let endTimeText = document.getElementById('endTimeText');        //歌曲开始播放时间标签
     
     //当前歌曲的索引
     let index = 0;
@@ -99,6 +99,14 @@ window.onload = function(){
     //歌曲播放过程中一直触发的事件（0.25秒触发一次）
     audio.ontimeupdate = process;
     function process(){
+        //如果是循环播放，那么每次播放完毕后，歌词也要重置
+        if(audio.loop){
+            //循环播放时，每次结束时间并不能精确等于总时长，所以要留出0.33秒。
+            if(audio.currentTime>=audio.duration-0.33){
+                //重置歌词
+                resetLyric();
+            }
+        }
         //当前歌词中的li的索引不能超过当前歌词中的li的最大索引。
         if(indexLi<musicArr[index].lyricArr.length){
             //audio.currentTime是当前播放时长，让它与每个歌词的时间做对比
@@ -151,6 +159,13 @@ window.onload = function(){
     function end(){
         //歌曲播放完毕后，播放按钮设置成play图标
         playBtn.getElementsByTagName('i')[0].className='fa fa-play';
+        //重置歌词
+        resetLyric();
+        
+    }
+
+    //重置歌词
+    function resetLyric(){
         //歌词块回到初始状态
         let scroll = lyricBox.getElementsByTagName('ul')[0];
         scroll.style.top = '0';
@@ -195,8 +210,10 @@ window.onload = function(){
             init(index);
             //歌曲列表块隐藏
             musicListBox.style.display = 'none';
-            //歌曲播放完毕时要做的事
-            end();
+            //歌曲播放完毕后，播放按钮设置成play图标
+            playBtn.getElementsByTagName('i')[0].className='fa fa-play';
+            //重置歌词
+            resetLyric();
         }
     }
 

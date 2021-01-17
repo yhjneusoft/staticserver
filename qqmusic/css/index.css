@@ -98,6 +98,7 @@ html,body,.container{
     left: 0;
     top: 0;
 }
+/*这里都使用px，是因为做动画时，歌词向上滚动距离要能被整除。*/
 .container .lyric ul li{
     width: 100%;
     text-align: center;
