@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QQ音乐</title>
     <link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="./css/index.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -20,7 +22,7 @@
                 </ul>
             </div>
         </header>
-        
+
         <div class="lyric" id="lyricBox">
             <ul>
                 <!-- 动态数据 -->
@@ -31,8 +33,8 @@
         </div>
         <div class="progress">
             <div class="begin" id="beginTimeText"></div>
-            <div class="progress-box">
-                <div class="bar"></div>
+            <div class="progress-box" id="progressBox">
+                <div class="bar" id="bar"></div>
                 <div class="bar-header"></div>
             </div>
             <div class="end" id="endTimeText"></div>
@@ -55,5 +57,7 @@
     </div>
     <script src="./js/lyric.js"></script>
     <script src="./js/index.js"></script>
+
 </body>
+
 </html>

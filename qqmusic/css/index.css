@@ -170,6 +170,8 @@ html,body,.container{
 
     user-select: none;
     cursor: pointer;
+
+    display: none;
 }
 
 /************************ controller 控制台 ***********************/

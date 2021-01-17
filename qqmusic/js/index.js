@@ -13,11 +13,16 @@ window.onload = function(){
 
     let beginTimeText = document.getElementById('beginTimeText');    //歌曲开始播放时间标签
     let endTimeText = document.getElementById('endTimeText');        //歌曲开始播放时间标签
+
+    let progressBox = document.getElementById('progressBox');    //进度条容器
+    let bar = document.getElementById('bar');            //进度条
     
     //当前歌曲的索引
     let index = 0;
     //当前歌词列表中的每一句歌词的索引
     let indexLi = 0;
+    //进度条容器宽度
+    let progressBoxWidth = progressBox.offsetWidth;
 
     //创建audio对象
     let audio = document.createElement('audio');
@@ -40,8 +45,11 @@ window.onload = function(){
         logoImg.src = './img/'+musicArr[index].img;
         //audio播放歌曲初始化
         audio.src = './music/'+musicArr[index].url;
+        //加载歌曲
         audio.load();
+        //重置是否循环播放按钮，并调用setloopBtnStyle()方法给按钮设置样式
         audio.loop = false;
+        setloopBtnStyle();
         //音频文件加载完毕事件
         audio.onloadedmetadata = complete;
         //滚动歌词初始化
@@ -53,6 +61,8 @@ window.onload = function(){
         //歌曲播放时间初始化
         beginTimeText.innerHTML = '00:00';
         endTimeText.innerHTML = timeConvert(audio.duration);
+        //进度条初始化
+        bar.style.width = '0px';
     }
 
     //时间转换（xx.xxxxx秒 => 00:00）
@@ -99,18 +109,28 @@ window.onload = function(){
     //歌曲播放过程中一直触发的事件（0.25秒触发一次）
     audio.ontimeupdate = process;
     function process(){
+        //当前播放时长
+        let currentTime = audio.currentTime;
+        //歌曲总时长
+        let sumTime = audio.duration;
         //如果是循环播放，那么每次播放完毕后，歌词也要重置
         if(audio.loop){
             //循环播放时，每次结束时间并不能精确等于总时长，所以要留出0.33秒。
-            if(audio.currentTime>=audio.duration-0.33){
+            if(currentTime>=sumTime-0.33){
                 //重置歌词
                 resetLyric();
+                //重置进度条
+                resetBar();
             }
         }
-        //当前歌词中的li的索引不能超过当前歌词中的li的最大索引。
+        //处理进度条
+        bar.style.width = currentTime/sumTime*progressBoxWidth + 'px';
+        beginTimeText.innerHTML = timeConvert(currentTime);
+
+        //处理歌词块：当前歌词中的li的索引不能超过当前歌词中的li的最大索引。
         if(indexLi<musicArr[index].lyricArr.length){
             //audio.currentTime是当前播放时长，让它与每个歌词的时间做对比
-            if(timeConvert(audio.currentTime)==musicArr[index].lyricArr[indexLi].time){
+            if(timeConvert(currentTime)==musicArr[index].lyricArr[indexLi].time){
                 animation();
                 indexLi++;
             }
@@ -161,7 +181,8 @@ window.onload = function(){
         playBtn.getElementsByTagName('i')[0].className='fa fa-play';
         //重置歌词
         resetLyric();
-        
+        //重置进度条
+        resetBar();
     }
 
     //重置歌词
@@ -175,20 +196,29 @@ window.onload = function(){
         indexLi = 0;
     }
 
+    //重置进度条及播放时间
+    function resetBar(){
+        beginTimeText.innerHTML = '00:00';
+        bar.style.width = '0px';
+    }
+
     //是否循环播放按钮
     loopBtn.onclick = function(event){
-        if(audio.loop){
-            audio.loop = false;
-            this.style.color = '#888';
-            this.style.border = 'solid 1px #888';
-            this.style.backgroundColor = '';
-        }else{
-            audio.loop = true;
-            this.style.color = '#fff';
-            this.style.border = 'none';
-            this.style.backgroundColor = '#2FC27D';
-        }
+        audio.loop = !audio.loop;
+        setloopBtnStyle();
         event.stopPropagation();
+    };
+    //给循环播放按钮设置样式
+    function setloopBtnStyle(event){
+        if(audio.loop){
+            loopBtn.style.color = '#fff';
+            loopBtn.style.border = 'none';
+            loopBtn.style.backgroundColor = '#2FC27D';
+        }else{
+            loopBtn.style.color = '#888';
+            loopBtn.style.border = 'solid 1px #888';
+            loopBtn.style.backgroundColor = '';
+        }
     }
 
     //是否显示播放列表按钮
@@ -214,6 +244,21 @@ window.onload = function(){
             playBtn.getElementsByTagName('i')[0].className='fa fa-play';
             //重置歌词
             resetLyric();
+            //重置进度条
+            resetBar();
+        }
+    }
+
+    //后退按钮
+    backBtn.onclick = function(){
+        if(audio.currentTime-5>=0){
+            audio.currentTime -= 5;
+        }
+    }
+    //前进按钮
+    forwardBtn.onclick = function(){
+        if(audio.currentTime+5<audio.duration){
+            audio.currentTime += 5;
         }
     }
 
