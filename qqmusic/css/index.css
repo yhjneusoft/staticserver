@@ -69,7 +69,7 @@ html,body,.container{
 /************************ logo 图片 ***********************/
 .container .logo{
     width: 100%;
-    height: 46vw;
+    height: 44vw;
     display: flex;
     justify-content: center;
     align-items: center; 
