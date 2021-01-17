@@ -82,7 +82,7 @@ html,body,.container{
 /************************ lyric 歌词 ***********************/
 .container .lyric{
     width: 100%;
-    height: 56vw;
+    height: 224px;
     margin: 3vw 0 1vw;
     overflow: hidden;
     position: relative;
@@ -98,8 +98,8 @@ html,body,.container{
 .container .lyric ul li{
     width: 100%;
     text-align: center;
-    line-height: 8vw;
-    font-size: 4vw;
+    line-height: 32px;
+    font-size: 16px;
     color: #fff;
     opacity: 0.3;
 }

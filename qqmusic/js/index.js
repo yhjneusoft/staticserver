@@ -115,12 +115,10 @@ window.onload = function(){
         let liHeight = scroll.getElementsByTagName('li')[0].offsetHeight;
         //初始化
         let count = 0;    //动画一共4帧
-        let tempOffsetTop = scroll.offsetTop;
         let interval = setInterval(()=>{
             scroll.style.top = scroll.offsetTop - liHeight/4 + 'px';
             count++;
             if(count>=4){
-                scroll.style.top = tempOffsetTop - liHeight + 'px';
                 clearInterval(interval);
                 //歌词要向上走一位，所以要重新设置新的7个歌词的颜色
                 setLyricLiColor(indexLi);
