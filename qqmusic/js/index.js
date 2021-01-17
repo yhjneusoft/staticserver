@@ -115,11 +115,12 @@ window.onload = function(){
         let liHeight = scroll.getElementsByTagName('li')[0].offsetHeight;
         //初始化
         let count = 0;    //动画一共4帧
-
+        let tempOffsetTop = scroll.offsetTop;
         let interval = setInterval(()=>{
-            scroll.style.top = Math.round(scroll.offsetTop - liHeight/4) + 'px';
+            scroll.style.top = scroll.offsetTop - liHeight/4 + 'px';
             count++;
             if(count>=4){
+                scroll.style.top = tempOffsetTop - liHeight + 'px';
                 clearInterval(interval);
                 //歌词要向上走一位，所以要重新设置新的7个歌词的颜色
                 setLyricLiColor(indexLi);
@@ -147,7 +148,7 @@ window.onload = function(){
         liArr[num+6].style.opacity = 0.3;
     }
 
-    //歌曲播放完毕触发的事件
+    //歌曲播放完毕,或切换歌曲时，触发的事件
     audio.onended = end;
     function end(){
         //歌曲播放完毕后，播放按钮设置成play图标
@@ -193,13 +194,11 @@ window.onload = function(){
         //（切换歌曲按钮事件）播放列表中的每一个选项按钮事件
         liArr[i].onclick = function(event){
             index = i;
-            indexLi = 0;
             init(index);
-            //只要切换了歌曲，就停止播放，播放按钮设置成play图标
-            playBtn.getElementsByTagName('i')[0].className='fa fa-play';
             //歌曲列表块隐藏
             musicListBox.style.display = 'none';
-            event.stopPropagation();
+            //歌曲播放完毕时要做的事
+            end();
         }
     }
 
