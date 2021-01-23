@@ -60,18 +60,27 @@ window.onload = function(){
         lyricBoxInit(index);
         */
 
-        //显示正在加载图标
-        loading.style.display = 'block';
+        
         //audio播放歌曲初始化
         audio.src = './music/'+musicArr[index].url;
         //加载歌曲
         audio.load();
         //音频文件加载完毕事件
-        audio.onloadedmetadata = complete;
+        //audio.onloadedmetadata = complete;
+    }
+
+    //音频文件开始加载事件
+    audio.onloadstart = loadstartEvent;
+    //成功获取音频文件长度事件
+    audio.onloadedmetadata = loadedmetadataEvent;
+
+    function loadstartEvent(){
+        //显示正在加载图标
+        loading.style.display = 'block';
     }
 
     //音频文件加载完毕事件
-    function complete(){
+    function loadedmetadataEvent(){
         //歌曲名称初始化
         musicNameP.innerHTML = musicArr[index].name;
         //歌曲对应图片初始化
