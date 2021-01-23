@@ -239,10 +239,23 @@ html,body,.container{
 .container .fa-spinner{
     font-size: 12vw;
     color: #fff;
-    opacity: 0.5;
+    opacity: 0.6;
     position: absolute;
     left: 45vw;
     top:40vh;
     display: none;
+
+    /* 应用动画。 linear：线性 */
+	animation: move1 2s linear infinite;
+}
+
+/* 创建动画规则move1,360度旋转 */
+@keyframes move1 {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
