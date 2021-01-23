@@ -39,30 +39,49 @@ window.onload = function(){
     musicListBox.getElementsByTagName('ul')[0].innerHTML = musicListStr;
 
     //初始化
-    init(index);
+    init();
 
     function init(){
+        /*
         //歌曲名称初始化
         musicNameP.innerHTML = musicArr[index].name;
         //歌曲对应图片初始化
         logoImg.src = './img/'+musicArr[index].img;
         //audio播放歌曲初始化
         audio.src = './music/'+musicArr[index].url;
-
+        //显示正在加载图标
         loading.style.display = 'block';
         //加载歌曲
         audio.load();
         //重置是否循环播放按钮，并调用setloopBtnStyle()方法给按钮设置样式
         audio.loop = false;
         setloopBtnStyle();
-        //音频文件加载完毕事件
-        audio.onloadedmetadata = complete;
         //滚动歌词初始化
         lyricBoxInit(index);
+        */
+
+        //audio播放歌曲初始化
+        audio.src = './music/'+musicArr[index].url;
+        //加载歌曲
+        audio.load();
+        //音频文件加载完毕事件
+        audio.onloadedmetadata = complete;
     }
 
     //音频文件加载完毕事件
     function complete(){
+        //歌曲名称初始化
+        musicNameP.innerHTML = musicArr[index].name;
+        //歌曲对应图片初始化
+        logoImg.src = './img/'+musicArr[index].img;
+        //显示正在加载图标
+        loading.style.display = 'block';
+        //重置是否循环播放按钮，并调用setloopBtnStyle()方法给按钮设置样式
+        audio.loop = false;
+        setloopBtnStyle();
+        //滚动歌词初始化
+        lyricBoxInit(index);
+
         //歌曲播放时间初始化
         beginTimeText.innerHTML = '00:00';
         endTimeText.innerHTML = timeConvert(audio.duration);
@@ -243,7 +262,7 @@ window.onload = function(){
         //（切换歌曲按钮事件）播放列表中的每一个选项按钮事件
         liArr[i].onclick = function(event){
             index = i;
-            init(index);
+            init();
             //歌曲列表块隐藏
             musicListBox.style.display = 'none';
             //歌曲播放完毕后，播放按钮设置成play图标
