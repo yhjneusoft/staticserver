@@ -1,4 +1,4 @@
-window.onload = function(){
+window.onload = function () {
     let playBtn = document.getElementById('playBtn');        //播放按钮
     let backBtn = document.getElementById('backBtn');        //后退按钮
     let forwardBtn = document.getElementById('forwardBtn');  //前进按钮
@@ -19,7 +19,7 @@ window.onload = function(){
 
     let loading = document.getElementById('loading');            //加载图标
 
-    
+
     //当前歌曲的索引
     let index = 0;
     //当前歌词列表中的每一句歌词的索引
@@ -33,15 +33,15 @@ window.onload = function(){
 
     //给歌曲列表添加数据
     let musicListStr = '';
-    for(let i=0;i<musicArr.length;i++){
-        musicListStr += '<li>'+musicArr[i].name+'</li>'
+    for (let i = 0; i < musicArr.length; i++) {
+        musicListStr += '<li>' + musicArr[i].name + '</li>'
     }
     musicListBox.getElementsByTagName('ul')[0].innerHTML = musicListStr;
 
     //初始化
     init();
 
-    function init(){
+    function init() {
         /*
         //歌曲名称初始化
         musicNameP.innerHTML = musicArr[index].name;
@@ -60,9 +60,9 @@ window.onload = function(){
         lyricBoxInit(index);
         */
 
-        
+
         //audio播放歌曲初始化
-        audio.src = './music/'+musicArr[index].url;
+        audio.src = './music/' + musicArr[index].url;
         //加载歌曲
         audio.load();
         //音频文件加载完毕事件
@@ -71,20 +71,20 @@ window.onload = function(){
 
     //音频文件开始加载事件
     audio.onloadstart = loadstartEvent;
-    //成功获取音频文件长度事件
-    audio.oncanplaythrough = loadedmetadataEvent;
+    //可以播放，歌曲全部加载完毕事件
+    audio.onloadedmetadata = loadedmetadataEvent;
 
-    function loadstartEvent(){
+    function loadstartEvent() {
         //显示正在加载图标
         loading.style.display = 'block';
     }
 
     //音频文件加载完毕事件
-    function loadedmetadataEvent(){
+    function loadedmetadataEvent() {
         //歌曲名称初始化
         musicNameP.innerHTML = musicArr[index].name;
         //歌曲对应图片初始化
-        logoImg.src = './img/'+musicArr[index].img;
+        logoImg.src = './img/' + musicArr[index].img;
         //重置是否循环播放按钮，并调用setloopBtnStyle()方法给按钮设置样式
         audio.loop = false;
         setloopBtnStyle();
@@ -100,57 +100,57 @@ window.onload = function(){
     }
 
     //时间转换（xx.xxxxx秒 => 00:00）
-    function timeConvert(time){
+    function timeConvert(time) {
         //分
-        let minutes = parseInt(time/60);
+        let minutes = parseInt(time / 60);
         if (minutes < 10) {
             minutes = '0' + minutes;
         }
         //秒
-        let seconds = Math.round(time%60);  //返回最接近的整数
+        let seconds = Math.round(time % 60);  //返回最接近的整数
         if (seconds < 10) {
             seconds = '0' + seconds;
         }
-        return minutes+':'+seconds;
+        return minutes + ':' + seconds;
     }
 
     //给歌词列表添加数据
-    function lyricBoxInit(){
-        let str = '<li>'+musicArr[index].name+'</li>'+
-                  '<li>作词：'+musicArr[index].lyric+'</li>'+
-                  '<li>作曲：'+musicArr[index].song+'</li>'+
-                  '<li>演唱：'+musicArr[index].sing+'</li>';
-        for(let i=0;i<musicArr[index].lyricArr.length;i++){
-            str += '<li>'+musicArr[index].lyricArr[i].lyric+'</li>';
+    function lyricBoxInit() {
+        let str = '<li>' + musicArr[index].name + '</li>' +
+            '<li>作词：' + musicArr[index].lyric + '</li>' +
+            '<li>作曲：' + musicArr[index].song + '</li>' +
+            '<li>演唱：' + musicArr[index].sing + '</li>';
+        for (let i = 0; i < musicArr[index].lyricArr.length; i++) {
+            str += '<li>' + musicArr[index].lyricArr[i].lyric + '</li>';
         }
         str += '<li></li><li></li><li></li>';
         lyricBox.getElementsByTagName('ul')[0].innerHTML = str;
     }
-    
+
     //开始播放按钮：chrome等高版本浏览器禁止页面加载时播放，所以必须要在事件中播放
-    playBtn.onclick = function(event){
+    playBtn.onclick = function (event) {
         let icon = this.getElementsByTagName('i')[0];
-        if(icon.className=='fa fa-play'){
+        if (icon.className == 'fa fa-play') {
             audio.play();
-            icon.className='fa fa-pause';
-        }else{
+            icon.className = 'fa fa-pause';
+        } else {
             audio.pause();
-            icon.className='fa fa-play';
+            icon.className = 'fa fa-play';
         }
         event.stopPropagation();
     }
 
     //歌曲播放过程中一直触发的事件（0.25秒触发一次）
     audio.ontimeupdate = process;
-    function process(){
+    function process() {
         //当前播放时长
         let currentTime = audio.currentTime;
         //歌曲总时长
         let sumTime = audio.duration;
         //如果是循环播放，那么每次播放完毕后，歌词也要重置
-        if(audio.loop){
+        if (audio.loop) {
             //循环播放时，每次结束时间并不能精确等于总时长，所以要留出0.33秒。
-            if(currentTime>=sumTime-0.33){
+            if (currentTime >= sumTime - 0.33) {
                 //重置歌词
                 resetLyric();
                 //重置进度条
@@ -158,29 +158,48 @@ window.onload = function(){
             }
         }
         //处理进度条
-        bar.style.width = currentTime/sumTime*progressBoxWidth + 'px';
+        bar.style.width = currentTime / sumTime * progressBoxWidth + 'px';
         beginTimeText.innerHTML = timeConvert(currentTime);
 
         //处理歌词块：当前歌词中的li的索引不能超过当前歌词中的li的最大索引。
-        if(indexLi<musicArr[index].lyricArr.length){
+        if (indexLi < musicArr[index].lyricArr.length) {
             //audio.currentTime是当前播放时长，让它与每个歌词的时间做对比
-            if(timeConvert(currentTime)==musicArr[index].lyricArr[indexLi].time){
+            if (timeConvert(currentTime) == musicArr[index].lyricArr[indexLi].time) {
                 animation();
                 indexLi++;
             }
-        }    
+
+            /*
+            let arr = musicArr[index].lyricArr;
+            let curTime = timeConvert(currentTime);
+            for(let i=0;i<arr.length;i++){
+                if(i==0 && curTime<arr[0].time){
+                    indexLi = 0;        
+                }else if(i==arr.length-1 && curTime>arr[arr.length-1].time){
+                    indexLi = arr.length-1;       
+                }else if(curTime>arr[i].time && curTime<=arr[i+1].time){
+                    animation();
+                    indexLi = i+1;                   
+                }
+            }
+            */
+        }
     }
 
     //歌词向上滚动动画
-    function animation(){
+    function animation() {
+        //歌词ul对象
         let scroll = lyricBox.getElementsByTagName('ul')[0];
+        //歌词ul中的每一个li的高度
         let liHeight = scroll.getElementsByTagName('li')[0].offsetHeight;
+        //动画结束高度与当前高度差
+        //let difference = scroll.offsetTop - (liHeight*indexLi);
         //初始化
         let count = 0;    //动画一共4帧
-        let interval = setInterval(()=>{
-            scroll.style.top = scroll.offsetTop - liHeight/4 + 'px';
+        let interval = setInterval(() => {
+            scroll.style.top = scroll.offsetTop - liHeight / 4 + 'px';
             count++;
-            if(count>=4){
+            if (count >= 4) {
                 clearInterval(interval);
                 //歌词要向上走一位，所以要重新设置新的7个歌词的颜色
                 setLyricLiColor(indexLi);
@@ -189,30 +208,30 @@ window.onload = function(){
     }
 
     //歌词要向上走一位，所以要重新设置新的7个歌词的颜色
-    function setLyricLiColor(num){
+    function setLyricLiColor(num) {
         let scroll = lyricBox.getElementsByTagName('ul')[0];
         let liArr = scroll.getElementsByTagName('li');
         liArr[num].style.color = '#fff';
         liArr[num].style.opacity = 0.3;
-        liArr[num+1].style.color = '#fff';
-        liArr[num+1].style.opacity = 0.5;
-        liArr[num+2].style.color = '#fff';
-        liArr[num+2].style.opacity = 0.7;
-        liArr[num+3].style.color = '#2FC27D';
-        liArr[num+3].style.opacity = 1;
-        liArr[num+4].style.color = '#fff';
-        liArr[num+4].style.opacity = 0.7;
-        liArr[num+5].style.color = '#fff';
-        liArr[num+5].style.opacity = 0.5;
-        liArr[num+6].style.color = '#fff';
-        liArr[num+6].style.opacity = 0.3;
+        liArr[num + 1].style.color = '#fff';
+        liArr[num + 1].style.opacity = 0.5;
+        liArr[num + 2].style.color = '#fff';
+        liArr[num + 2].style.opacity = 0.7;
+        liArr[num + 3].style.color = '#2FC27D';
+        liArr[num + 3].style.opacity = 1;
+        liArr[num + 4].style.color = '#fff';
+        liArr[num + 4].style.opacity = 0.7;
+        liArr[num + 5].style.color = '#fff';
+        liArr[num + 5].style.opacity = 0.5;
+        liArr[num + 6].style.color = '#fff';
+        liArr[num + 6].style.opacity = 0.3;
     }
 
     //歌曲播放完毕,或切换歌曲时，触发的事件
     audio.onended = end;
-    function end(){
+    function end() {
         //歌曲播放完毕后，播放按钮设置成play图标
-        playBtn.getElementsByTagName('i')[0].className='fa fa-play';
+        playBtn.getElementsByTagName('i')[0].className = 'fa fa-play';
         //重置歌词
         resetLyric();
         //重置进度条
@@ -220,7 +239,7 @@ window.onload = function(){
     }
 
     //重置歌词
-    function resetLyric(){
+    function resetLyric() {
         //歌词块回到初始状态
         let scroll = lyricBox.getElementsByTagName('ul')[0];
         scroll.style.top = '0';
@@ -231,24 +250,24 @@ window.onload = function(){
     }
 
     //重置进度条及播放时间
-    function resetBar(){
+    function resetBar() {
         beginTimeText.innerHTML = '00:00';
         bar.style.width = '0px';
     }
 
     //是否循环播放按钮
-    loopBtn.onclick = function(event){
+    loopBtn.onclick = function (event) {
         audio.loop = !audio.loop;
         setloopBtnStyle();
         event.stopPropagation();
     };
     //给循环播放按钮设置样式
-    function setloopBtnStyle(event){
-        if(audio.loop){
+    function setloopBtnStyle(event) {
+        if (audio.loop) {
             loopBtn.style.color = '#fff';
             loopBtn.style.border = 'none';
             loopBtn.style.backgroundColor = '#2FC27D';
-        }else{
+        } else {
             loopBtn.style.color = '#888';
             loopBtn.style.border = 'solid 1px #888';
             loopBtn.style.backgroundColor = '';
@@ -256,10 +275,10 @@ window.onload = function(){
     }
 
     //是否显示播放列表按钮
-    musicShowBtn.onclick = function(event){
-        if(musicListBox.style.display=='block'){
+    musicShowBtn.onclick = function (event) {
+        if (musicListBox.style.display == 'block') {
             musicListBox.style.display = 'none';
-        }else{
+        } else {
             musicListBox.style.display = 'block';
         }
         event.stopPropagation();
@@ -267,15 +286,15 @@ window.onload = function(){
 
     //获取播放列表中的所有li
     let liArr = musicListBox.getElementsByTagName('li');
-    for(let i=0;i<liArr.length;i++){
+    for (let i = 0; i < liArr.length; i++) {
         //（切换歌曲按钮事件）播放列表中的每一个选项按钮事件
-        liArr[i].onclick = function(event){
+        liArr[i].onclick = function (event) {
             index = i;
             init();
             //歌曲列表块隐藏
             musicListBox.style.display = 'none';
             //歌曲播放完毕后，播放按钮设置成play图标
-            playBtn.getElementsByTagName('i')[0].className='fa fa-play';
+            playBtn.getElementsByTagName('i')[0].className = 'fa fa-play';
             //重置歌词
             resetLyric();
             //重置进度条
@@ -283,20 +302,52 @@ window.onload = function(){
         }
     }
 
+    //避免用户快速频繁的点击前进与后退按钮的指示变量
+    let backFlag = 0;
+    let forwardFlag = 0;
     //后退按钮
-    backBtn.onclick = function(){
-        if(audio.currentTime-5>=0){
-            audio.currentTime -= 5;
+    backBtn.onclick = function () {
+        if(backFlag==0){
+            backFlag=1;
+            if (audio.currentTime - 5 >= 0) {
+                audio.currentTime -= 5;
+            }
+            backOrforwardresetLyric();
+            backFlag=0;
         }
     }
     //前进按钮
-    forwardBtn.onclick = function(){
-        if(audio.currentTime+5<audio.duration){
-            audio.currentTime += 5;
+    forwardBtn.onclick = function () {
+        if(forwardFlag==0){
+            forwardFlag=1;
+            if (audio.currentTime + 5 < audio.duration) {
+                audio.currentTime += 5;
+            }
+            backOrforwardresetLyric();
+            forwardFlag=0;
         }
     }
+        
+    function backOrforwardresetLyric(){
+        let arr = musicArr[index].lyricArr;
+        let curTime = timeConvert(audio.currentTime);
+        for (let i = 0; i < arr.length; i++) {
+            if (i == 0 && curTime < arr[0].time) {
+                indexLi = 0;
+            } else if (i == arr.length - 1 && curTime > arr[arr.length - 1].time) {
+                indexLi = arr.length - 1;
+            } else if (curTime > arr[i].time && curTime <= arr[i + 1].time) {
+                indexLi = i + 1;
+            }
+        }
 
-    document.onclick = function(){
+        let scroll = lyricBox.getElementsByTagName('ul')[0];
+        let liHeight = scroll.getElementsByTagName('li')[0].offsetHeight;
+        scroll.style.top = -liHeight*indexLi + 'px';
+        setLyricLiColor(indexLi);
+    }
+
+    document.onclick = function () {
         musicListBox.style.display = 'none';
     }
 }
