@@ -235,3 +235,14 @@ html,body,.container{
     align-items: center;
 }
 
+/************************ loading 加载图标 ***********************/
+.container .loading{
+    font-size: 10vw;
+    color: #fff;
+    opacity: 0.7;
+    position: absolute;
+    left: 45vw;
+    top:45vh;
+    display: none;
+}
+
