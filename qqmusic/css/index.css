@@ -236,13 +236,13 @@ html,body,.container{
 }
 
 /************************ loading 加载图标 ***********************/
-.container .loading{
-    font-size: 16vw;
+.container .fa-spinner{
+    font-size: 12vw;
     color: #fff;
-    opacity: 0.7;
+    opacity: 0.5;
     position: absolute;
     left: 45vw;
-    top:45vh;
+    top:40vh;
     display: none;
 }
 
