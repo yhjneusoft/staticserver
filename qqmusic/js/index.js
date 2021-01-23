@@ -72,7 +72,7 @@ window.onload = function(){
     //音频文件开始加载事件
     audio.onloadstart = loadstartEvent;
     //成功获取音频文件长度事件
-    audio.onloadedmetadata = loadedmetadataEvent;
+    audio.oncanplaythrough = loadedmetadataEvent;
 
     function loadstartEvent(){
         //显示正在加载图标
