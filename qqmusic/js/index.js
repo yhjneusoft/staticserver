@@ -64,6 +64,8 @@ window.onload = function(){
         audio.src = './music/'+musicArr[index].url;
         //加载歌曲
         audio.load();
+        //显示正在加载图标
+        loading.style.display = 'block';
         //音频文件加载完毕事件
         audio.onloadedmetadata = complete;
     }
@@ -74,8 +76,6 @@ window.onload = function(){
         musicNameP.innerHTML = musicArr[index].name;
         //歌曲对应图片初始化
         logoImg.src = './img/'+musicArr[index].img;
-        //显示正在加载图标
-        loading.style.display = 'block';
         //重置是否循环播放按钮，并调用setloopBtnStyle()方法给按钮设置样式
         audio.loop = false;
         setloopBtnStyle();
