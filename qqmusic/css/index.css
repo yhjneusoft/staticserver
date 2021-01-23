@@ -154,7 +154,7 @@ html,body,.container{
     position: relative;
 }
 .container .progress .progress-box .bar{
-    width: 50%;
+    width: 0%;
     height: 0.7vw;
     background-color:#2FC27D;
 }
