@@ -60,12 +60,12 @@ window.onload = function(){
         lyricBoxInit(index);
         */
 
+        //显示正在加载图标
+        loading.style.display = 'block';
         //audio播放歌曲初始化
         audio.src = './music/'+musicArr[index].url;
         //加载歌曲
         audio.load();
-        //显示正在加载图标
-        loading.style.display = 'block';
         //音频文件加载完毕事件
         audio.onloadedmetadata = complete;
     }
