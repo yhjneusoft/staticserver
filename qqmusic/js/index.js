@@ -15,7 +15,10 @@ window.onload = function(){
     let endTimeText = document.getElementById('endTimeText');        //歌曲开始播放时间标签
 
     let progressBox = document.getElementById('progressBox');    //进度条容器
-    let bar = document.getElementById('bar');            //进度条
+    let bar = document.getElementById('bar');                    //进度条
+
+    let loading = document.getElementById('loading');            //加载图标
+
     
     //当前歌曲的索引
     let index = 0;
@@ -45,6 +48,8 @@ window.onload = function(){
         logoImg.src = './img/'+musicArr[index].img;
         //audio播放歌曲初始化
         audio.src = './music/'+musicArr[index].url;
+
+        loading.style.display = 'block';
         //加载歌曲
         audio.load();
         //重置是否循环播放按钮，并调用setloopBtnStyle()方法给按钮设置样式
@@ -63,6 +68,7 @@ window.onload = function(){
         endTimeText.innerHTML = timeConvert(audio.duration);
         //进度条初始化
         bar.style.width = '0px';
+        loading.style.display = 'none';
     }
 
     //时间转换（xx.xxxxx秒 => 00:00）
