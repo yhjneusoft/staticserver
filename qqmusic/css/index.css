@@ -144,7 +144,12 @@ html,body,.container{
     flex: 1;
     font-size: 3.2vw;
     color: #888;
-    text-align: center;
+}
+.container .progress .begin{
+    text-align: left;
+}
+.container .progress .end{
+    text-align: right;
 }
 .container .progress .progress-box{
     flex: 6;
@@ -159,19 +164,17 @@ html,body,.container{
     background-color:#2FC27D;
 }
 .container .progress .progress-box .bar-header{
-    width: 4vw;
-    height: 4vw;
+    width: 14px;
+    height: 14px;
     background-color:#2FC27D;
-    border-radius: 2vw;
+    border-radius: 7px;
 
     position: absolute;
-    left: 50%;
+    left: 0;
     top: -1.7vw;
 
     user-select: none;
     cursor: pointer;
-
-    display: none;
 }
 
 /************************ controller 控制台 ***********************/

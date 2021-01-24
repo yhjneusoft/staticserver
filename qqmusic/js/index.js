@@ -16,6 +16,7 @@ window.onload = function () {
 
     let progressBox = document.getElementById('progressBox');    //进度条容器
     let bar = document.getElementById('bar');                    //进度条
+    let barHeader = document.getElementById('barHeader');        //进度条头部
 
     let loading = document.getElementById('loading');            //加载图标
 
@@ -96,6 +97,7 @@ window.onload = function () {
         endTimeText.innerHTML = timeConvert(audio.duration);
         //进度条初始化
         bar.style.width = '0px';
+        barHeader.style.left = '-7px';
         loading.style.display = 'none';
     }
 
@@ -159,6 +161,7 @@ window.onload = function () {
         }
         //处理进度条
         bar.style.width = currentTime / sumTime * progressBoxWidth + 'px';
+        barHeader.style.left = currentTime / sumTime * progressBoxWidth - 7 + 'px';
         beginTimeText.innerHTML = timeConvert(currentTime);
 
         //处理歌词块：当前歌词中的li的索引不能超过当前歌词中的li的最大索引。
@@ -253,6 +256,7 @@ window.onload = function () {
     function resetBar() {
         beginTimeText.innerHTML = '00:00';
         bar.style.width = '0px';
+        barHeader.style.left = '-7px';
     }
 
     //是否循环播放按钮
