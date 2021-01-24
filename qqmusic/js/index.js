@@ -2,6 +2,7 @@ window.onload = function () {
     let playBtn = document.getElementById('playBtn');        //播放按钮
     let backBtn = document.getElementById('backBtn');        //后退按钮
     let forwardBtn = document.getElementById('forwardBtn');  //前进按钮
+
     let loopBtn = document.getElementById('loopBtn');        //是否循环播放按钮
     let logoImg = document.getElementById('logoImg');        //歌曲对应的图片标签
     let musicNameP = document.getElementById('musicNameP');  //显示歌曲名称标签
@@ -43,31 +44,10 @@ window.onload = function () {
     init();
 
     function init() {
-        /*
-        //歌曲名称初始化
-        musicNameP.innerHTML = musicArr[index].name;
-        //歌曲对应图片初始化
-        logoImg.src = './img/'+musicArr[index].img;
-        //audio播放歌曲初始化
-        audio.src = './music/'+musicArr[index].url;
-        //显示正在加载图标
-        loading.style.display = 'block';
-        //加载歌曲
-        audio.load();
-        //重置是否循环播放按钮，并调用setloopBtnStyle()方法给按钮设置样式
-        audio.loop = false;
-        setloopBtnStyle();
-        //滚动歌词初始化
-        lyricBoxInit(index);
-        */
-
-
         //audio播放歌曲初始化
         audio.src = './music/' + musicArr[index].url;
         //加载歌曲
         audio.load();
-        //音频文件加载完毕事件
-        //audio.onloadedmetadata = complete;
     }
 
     //音频文件开始加载事件
@@ -349,6 +329,34 @@ window.onload = function () {
         let liHeight = scroll.getElementsByTagName('li')[0].offsetHeight;
         scroll.style.top = -liHeight*indexLi + 'px';
         setLyricLiColor(indexLi);
+    }
+
+    progressBox.onclick = function(event){
+        //设置进度条位置
+        let w = event.clientX - this.offsetLeft;
+        bar.style.width = w+'px';
+        barHeader.style.left = w-7+'px';
+        //设置当前音乐播放位置（当前音乐播放时间=(进度条长度/进度条总长度*音乐总时长)）
+        audio.currentTime = (w/progressBoxWidth)*audio.duration;
+        //设置歌词位置
+        backOrforwardresetLyric();
+    }
+
+    let w = 0;
+    barHeader.ontouchmove = function(event){
+        w = event.touches[0].pageX-progressBox.offsetLeft;
+        bar.style.width = w+'px';
+        barHeader.style.left = w-7+'px';
+        event.preventDefault();    
+    }
+
+    barHeader.ontouchend = function(event){
+        bar.style.width = w+'px';
+        barHeader.style.left = w-7+'px';
+        //设置当前音乐播放位置（当前音乐播放时间=(进度条长度/进度条总长度*音乐总时长)）
+        audio.currentTime = (w/progressBoxWidth)*audio.duration;
+        //设置歌词位置
+        backOrforwardresetLyric();
     }
 
     document.onclick = function () {
