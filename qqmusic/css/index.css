@@ -221,7 +221,7 @@ html,body,.container{
     justify-content: center;
     align-items: center;
 }
-.container .controller div:nth-child(5) p{
+.container .controller div:nth-child(5) p{   
     font-size: 3vw;
     border-radius: 3vw;
     box-sizing: border-box;

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ音乐</title>
+    <link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <i class="fa fa-music"></i>
+            <p id="musicNameP">送你一朵小红花</p>
+            <i class="fa fa-navicon"></i>
+            <div class="music">
+                <ul>
+                    <li>送你一朵小红花</li>
+                    <li>一起走过的日子</li>
+                    <li>... ...</li>
+                </ul>
+            </div>
+        </header>
+        <div class="lyric">
+            <ul>
+                <li>送你一朵小红花</li>
+                <li>作词：赵英俊</li>
+                <li>作曲：赵英俊</li>
+                <li>演唱：赵英俊</li>
+                <li>送你一朵小红花</li>
+                <li>开在你昨天新长的枝桠</li>
+                <li>奖励你有勇气 主动来和我说话</li>
+            </ul>
+        </div>
+        <div class="logo">
+            <img src="" id="logoImg">
+        </div>
+        <div class="progress">
+            <div class="begin">00:00</div>
+            <div class="progress-box">
+                <div class="bar"></div>
+                <div class="bar-header"></div>
+            </div>
+            <div class="end">03:15</div>
+        </div>
+        <div class="controller">
+            <div></div>
+            <div>
+                <p><i class="fa fa-step-backward"></i></p>
+            </div>
+            <div>
+                <p id="playBtn"><i class="fa fa-play"></i></p>
+            </div>
+            <div>
+                <p><i class="fa fa-step-forward"></i></p>
+            </div>
+            <div>
+                <p id="loopBtn">不循环</p>
+            </div>
+        </div>
+        <i class="fa fa-spinner" id="loading"></i>
+    </div>
+    <!-- 加载歌曲信息 -->
+    <script src="./js/lyric.js"></script>
+    <script>
+        window.onload = function () {
+
+            let playBtn = document.getElementById('playBtn');        //播放按钮对象
+            let loading = document.getElementById('loading');        //加载音乐未完成时的图标对象
+            let logoImg = document.getElementById('logoImg');        //歌曲对应的图片对象
+            let musicNameP = document.getElementById('musicNameP');  //头部显示歌曲名称对象
+
+            //当前歌曲的索引（musicArr数组的索引；musicArr数组在 lyric.js 文件中）
+            let index = 0;
+
+            //创建audio对象，并添加到页面中
+            let audio = document.createElement('audio');
+            document.body.appendChild(audio);
+
+            //初始化audio对象
+            init();
+
+            function init() {
+                //audio播放歌曲初始化
+                audio.src = './music/' + musicArr[index].url;
+                //加载歌曲
+                audio.load();
+            }
+
+            //audio对象事件：音频文件开始加载事件
+            audio.onloadstart = function () {
+                loading.style.display = 'block';     //显示正在加载图标
+            }
+            //audio对象事件：指定视频/音频(audio/video)的元数据加载完毕事件
+            audio.onloadedmetadata = function () {
+                //歌曲名称初始化
+                musicNameP.innerHTML = musicArr[index].name;
+                //歌曲对应图片初始化
+                logoImg.src = './img/' + musicArr[index].img;
+                //歌曲加载完毕之后，加载图标隐藏
+                loading.style.display = 'none';
+            };
+
+            //开始播放按钮点击事件：chrome等高版本浏览器禁止页面加载时播放，所以必须要在事件中播放
+            playBtn.onclick = function (event) {
+                //播放按钮在"播放"与"暂停"之间切换
+                let icon = this.getElementsByTagName('i')[0];
+                if (icon.className == 'fa fa-play') {
+                    audio.play();
+                    icon.className = 'fa fa-pause';
+                } else {
+                    audio.pause();
+                    icon.className = 'fa fa-play';
+                }
+                event.stopPropagation();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
