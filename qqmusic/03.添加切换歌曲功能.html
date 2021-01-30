@@ -67,6 +67,7 @@
         window.onload = function () {
 
             let playBtn = document.getElementById('playBtn');        //播放按钮对象
+            let playBtnIcon = playBtn.getElementsByTagName('i')[0];  //播放按钮对象中的小图标对象
             let loading = document.getElementById('loading');        //加载音乐未完成时的图标对象
             let logoImg = document.getElementById('logoImg');        //歌曲对应的图片对象
             let musicNameP = document.getElementById('musicNameP');  //头部显示歌曲名称对象
@@ -101,17 +102,20 @@
                 //歌曲加载完毕之后，加载图标隐藏
                 loading.style.display = 'none';
             };
+            //歌曲播放完毕事件（audio.loop=true时不会触发此事件）
+            audio.onended = function () {
+                playBtnIcon.className = 'fa fa-play';
+            };
 
             //开始播放按钮点击事件：chrome等高版本浏览器禁止页面加载时播放，所以必须要在事件中播放
             playBtn.onclick = function (event) {
                 //播放按钮在"播放"与"暂停"之间切换
-                let icon = this.getElementsByTagName('i')[0];
-                if (icon.className == 'fa fa-play') {
+                if (playBtnIcon.className == 'fa fa-play') {
                     audio.play();
-                    icon.className = 'fa fa-pause';
+                    playBtnIcon.className = 'fa fa-pause';
                 } else {
                     audio.pause();
-                    icon.className = 'fa fa-play';
+                    playBtnIcon.className = 'fa fa-play';
                 }
                 event.stopPropagation();
             }
@@ -151,8 +155,8 @@
                     init();
                     //歌曲列表块隐藏
                     musicListBox.style.display = 'none';
-                    //歌曲播放完毕后，播放按钮设置成play图标
-                    playBtn.getElementsByTagName('i')[0].className = 'fa fa-play';
+                    //切换歌曲后，播放按钮设置成play图标
+                    playBtnIcon.className = 'fa fa-play';
                 }
             }
         }

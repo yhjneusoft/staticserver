@@ -15,12 +15,10 @@
         <header>
             <i class="fa fa-music"></i>
             <p id="musicNameP">送你一朵小红花</p>
-            <i class="fa fa-navicon"></i>
-            <div class="music">
+            <i class="fa fa-navicon" id="musicShowBtn"></i>
+            <div class="music" id="musicListBox">
                 <ul>
-                    <li>送你一朵小红花</li>
-                    <li>一起走过的日子</li>
-                    <li>... ...</li>
+                    <!-- 动态数据 -->
                 </ul>
             </div>
         </header>
@@ -103,10 +101,23 @@
                 logoImg.src = './img/' + musicArr[index].img;
                 //歌曲加载完毕之后，加载图标隐藏
                 loading.style.display = 'none';
+                //列表循环播放时的处理
+                if(loopType==2){
+                    audio.play();
+                    playBtnIcon.className = 'fa fa-pause';
+                }
             };
             //歌曲播放完毕事件（audio.loop=true时不会触发此事件）
             audio.onended = function () {
                 playBtnIcon.className = 'fa fa-play';
+                //列表循环播放时的处理
+                if(loopType==2){
+                    index++;
+                    if(index>=musicArr.length){
+                        index=0;
+                    }
+                    init();
+                }
             };
 
             //开始播放按钮点击事件：chrome等高版本浏览器禁止页面加载时播放，所以必须要在事件中播放
@@ -121,6 +132,86 @@
                 }
                 event.stopPropagation();
             }
+
+            /**************************** 03.添加切换歌曲功能 ****************************/
+
+            let musicShowBtn = document.getElementById('musicShowBtn');      //播放列表是否显示按钮
+            let musicListBox = document.getElementById('musicListBox');      //播放列表块
+
+            //给歌曲列表添加数据
+            let musicListStr = '';
+            for (let i = 0; i < musicArr.length; i++) {
+                musicListStr += '<li>' + musicArr[i].name + '</li>'
+            }
+            musicListBox.getElementsByTagName('ul')[0].innerHTML = musicListStr;
+
+            //是否显示播放列表按钮事件
+            musicShowBtn.onclick = function (event) {
+                if (musicListBox.style.display == 'block') {
+                    musicListBox.style.display = 'none';
+                } else {
+                    musicListBox.style.display = 'block';
+                }
+                event.stopPropagation();
+            }
+            //点击页面上任何其它位置，播放列表都隐藏
+            document.onclick = function () {
+                musicListBox.style.display = 'none';
+            }
+
+            //点击播放列表中的li时的事件
+            let liArr = musicListBox.getElementsByTagName('li');
+            for (let i = 0; i < liArr.length; i++) {
+                //（切换歌曲按钮事件）播放列表中的每一个选项按钮事件
+                liArr[i].onclick = function (event) {
+                    index = i;
+                    init();
+                    //歌曲列表块隐藏
+                    musicListBox.style.display = 'none';
+                    //切换歌曲后，播放按钮设置成play图标
+                    playBtnIcon.className = 'fa fa-play';
+                }
+            }
+
+            /**************************** 04.添加循环模式功能 ****************************/
+
+            let loopBtn = document.getElementById('loopBtn');        //是否循环播放按钮
+
+            let loopType = 0;   //0:不循环; 1:单曲循环; 2:列表循环; 
+
+            //是否循环播放按钮
+            loopBtn.onclick = function (event) {
+                if (loopType == 0) {
+                    //单曲循环设置       
+                    loopType = 1;
+                    audio.loop = true;
+                    loopBtn.style.color = '#fff';
+                    loopBtn.style.border = 'none';
+                    loopBtn.style.backgroundColor = '#2FC27D';
+                    loopBtn.innerHTML = '单曲循环';
+                } else if (loopType == 1) {
+                    //列表循环设置 
+                    loopType = 2;
+                    audio.loop = false;
+                    loopBtn.style.color = '#fff';
+                    loopBtn.style.border = 'none';
+                    loopBtn.style.backgroundColor = '#2FC27D';
+                    loopBtn.innerHTML = '列表循环';
+                } else if (loopType == 2) {
+                    //不循环设置 
+                    loopType = 0;
+                    audio.loop = false;
+                    loopBtn.style.color = '#888';
+                    loopBtn.style.border = 'solid 1px #888';
+                    loopBtn.style.backgroundColor = '';
+                    loopBtn.innerHTML = '不循环';
+                }
+                event.stopPropagation();
+            };
+
+            /**
+             * 注意：在audio.onended事件与audio.onloadedmetadata事件中也有新代码
+             */
         }
     </script>
 
