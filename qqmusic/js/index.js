@@ -1,9 +1,10 @@
 window.onload = function () {
+    let showSpeed = document.getElementById('showSpeed');    //播放速度显示标签
     let playBtn = document.getElementById('playBtn');        //播放按钮
-    let backBtn = document.getElementById('backBtn');        //后退按钮
-    let forwardBtn = document.getElementById('forwardBtn');  //前进按钮
-
+    let backBtn = document.getElementById('backBtn');        //后退按钮（播放速度）
+    let forwardBtn = document.getElementById('forwardBtn');  //前进按钮（播放速度）
     let loopBtn = document.getElementById('loopBtn');        //是否循环播放按钮
+
     let logoImg = document.getElementById('logoImg');        //歌曲对应的图片标签
     let musicNameP = document.getElementById('musicNameP');  //显示歌曲名称标签
 
@@ -29,6 +30,8 @@ window.onload = function () {
     //进度条容器宽度
     let progressBoxWidth = progressBox.offsetWidth;
 
+    let loopType = 0;   //0:不循环; 1:单曲循环; 2:列表循环; 
+
     //创建audio对象
     let audio = document.createElement('audio');
     document.body.appendChild(audio);
@@ -48,6 +51,9 @@ window.onload = function () {
         audio.src = './music/' + musicArr[index].url;
         //加载歌曲
         audio.load();
+
+        audio.playbackRate = 1.0;
+        showSpeed.innerHTML = '1.0x';
     }
 
     //音频文件开始加载事件
@@ -66,11 +72,16 @@ window.onload = function () {
         musicNameP.innerHTML = musicArr[index].name;
         //歌曲对应图片初始化
         logoImg.src = './img/' + musicArr[index].img;
-        //重置是否循环播放按钮，并调用setloopBtnStyle()方法给按钮设置样式
-        audio.loop = false;
-        setloopBtnStyle();
+        
+        //setloopBtnStyle();
         //滚动歌词初始化
         lyricBoxInit(index);
+
+        //列表循环播放时的处理
+        if(loopType==2){
+            audio.play();
+            playBtn.getElementsByTagName('i')[0].className = 'fa fa-pause';
+        }
 
         //歌曲播放时间初始化
         beginTimeText.innerHTML = '00:00';
@@ -151,21 +162,6 @@ window.onload = function () {
                 animation();
                 indexLi++;
             }
-
-            /*
-            let arr = musicArr[index].lyricArr;
-            let curTime = timeConvert(currentTime);
-            for(let i=0;i<arr.length;i++){
-                if(i==0 && curTime<arr[0].time){
-                    indexLi = 0;        
-                }else if(i==arr.length-1 && curTime>arr[arr.length-1].time){
-                    indexLi = arr.length-1;       
-                }else if(curTime>arr[i].time && curTime<=arr[i+1].time){
-                    animation();
-                    indexLi = i+1;                   
-                }
-            }
-            */
         }
     }
 
@@ -215,6 +211,14 @@ window.onload = function () {
     function end() {
         //歌曲播放完毕后，播放按钮设置成play图标
         playBtn.getElementsByTagName('i')[0].className = 'fa fa-play';
+        //列表循环播放时的处理
+        if(loopType==2){
+            index++;
+            if(index>=musicArr.length){
+                index=0;
+            }
+            init();
+        }
         //重置歌词
         resetLyric();
         //重置进度条
@@ -241,22 +245,33 @@ window.onload = function () {
 
     //是否循环播放按钮
     loopBtn.onclick = function (event) {
-        audio.loop = !audio.loop;
-        setloopBtnStyle();
-        event.stopPropagation();
-    };
-    //给循环播放按钮设置样式
-    function setloopBtnStyle(event) {
-        if (audio.loop) {
+        if (loopType == 0) {
+            //单曲循环设置       
+            loopType = 1;
+            audio.loop = true;
             loopBtn.style.color = '#fff';
             loopBtn.style.border = 'none';
             loopBtn.style.backgroundColor = '#2FC27D';
-        } else {
+            loopBtn.innerHTML = '单曲循环';
+        } else if (loopType == 1) {
+            //列表循环设置 
+            loopType = 2;
+            audio.loop = false;
+            loopBtn.style.color = '#fff';
+            loopBtn.style.border = 'none';
+            loopBtn.style.backgroundColor = '#2FC27D';
+            loopBtn.innerHTML = '列表循环';
+        } else if (loopType == 2) {
+            //不循环设置 
+            loopType = 0;
+            audio.loop = false;
             loopBtn.style.color = '#888';
             loopBtn.style.border = 'solid 1px #888';
             loopBtn.style.backgroundColor = '';
+            loopBtn.innerHTML = '不循环';
         }
-    }
+        event.stopPropagation();
+    };
 
     //是否显示播放列表按钮
     musicShowBtn.onclick = function (event) {
@@ -286,30 +301,25 @@ window.onload = function () {
         }
     }
 
-    //避免用户快速频繁的点击前进与后退按钮的指示变量
-    let backFlag = 0;
-    let forwardFlag = 0;
-    //后退按钮
-    backBtn.onclick = function () {
-        if(backFlag==0){
-            backFlag=1;
-            if (audio.currentTime - 5 >= 0) {
-                audio.currentTime -= 5;
-            }
-            backOrforwardresetLyric();
-            backFlag=0;
-        }
+    //后退按钮（播放速度）
+    backBtn.onclick = function(){
+        setSpeed(-0.1);
     }
-    //前进按钮
-    forwardBtn.onclick = function () {
-        if(forwardFlag==0){
-            forwardFlag=1;
-            if (audio.currentTime + 5 < audio.duration) {
-                audio.currentTime += 5;
-            }
-            backOrforwardresetLyric();
-            forwardFlag=0;
+    //前进按钮（播放速度）
+    forwardBtn.onclick = function(){
+        setSpeed(0.1);
+    }
+    function setSpeed(speed){
+        let curSpeed = audio.playbackRate;
+        //浮点运算时容易出现 1.1000000000001的情况，所以截取小数点一位（toFixed是四舍五入）
+        curSpeed = (curSpeed+speed).toFixed(1);
+        if(curSpeed>=3){
+            curSpeed = 3.0;
+        }else if(curSpeed<=0.2){
+            curSpeed = 0.2;
         }
+        audio.playbackRate = curSpeed;
+        showSpeed.innerHTML = (curSpeed==3?'3.0':curSpeed)+'x';
     }
         
     function backOrforwardresetLyric(){
@@ -319,7 +329,7 @@ window.onload = function () {
             if (i == 0 && curTime < arr[0].time) {
                 indexLi = 0;
             } else if (i == arr.length - 1 && curTime > arr[arr.length - 1].time) {
-                indexLi = arr.length - 1;
+                indexLi = arr.length;
             } else if (curTime > arr[i].time && curTime <= arr[i + 1].time) {
                 indexLi = i + 1;
             }
