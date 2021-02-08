@@ -345,9 +345,13 @@ window.onload = function () {
 
     /******************************* 用户触发事件 *******************************/
 
+    //设置歌词位置
     function backOrforwardresetLyric(){
+        //获取当前歌曲的歌词数组
         let arr = musicArr[index].lyricArr;
+        //获取当前播放时间
         let curTime = timeConvert(audio.currentTime);
+        //判断当前歌词位置
         for (let i = 0; i < arr.length; i++) {
             if (i == 0 && curTime < arr[0].time) {
                 indexLi = 0;
