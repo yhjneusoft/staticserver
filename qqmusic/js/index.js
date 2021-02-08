@@ -328,15 +328,13 @@ window.onload = function () {
     }
 
     //用户手指在进度条上滑动事件，为ontouchmove（手指滑动）与ontouchend（手指抬起）的组合
+    let w = 0;     //用户手指在进度条上滑动的位置
     barHeader.ontouchmove = function(event){
-        //用户手指在进度条上滑动的位置
-        let w = event.touches[0].pageX-progressBox.offsetLeft;
+        w = event.touches[0].pageX-progressBox.offsetLeft;
         bar.style.width = w+'px';
         barHeader.style.left = w-7+'px';   
     }
     barHeader.ontouchend = function(event){
-        //用户手指在进度条上抬起的位置
-        let w = event.touches[0].pageX-progressBox.offsetLeft;
         bar.style.width = w+'px';
         barHeader.style.left = w-7+'px';
         //设置当前音乐播放位置（当前音乐播放时间=(进度条长度/进度条总长度*音乐总时长)）
