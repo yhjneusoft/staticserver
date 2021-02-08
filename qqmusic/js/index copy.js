@@ -1,37 +1,41 @@
 window.onload = function () {
-    let playBtn = document.getElementById('playBtn');        //播放按钮
-    let backBtn = document.getElementById('backBtn');        //后退按钮
-    let forwardBtn = document.getElementById('forwardBtn');  //前进按钮
-
-    let loopBtn = document.getElementById('loopBtn');        //是否循环播放按钮
+    //有关歌曲信息的两个对象
     let logoImg = document.getElementById('logoImg');        //歌曲对应的图片标签
     let musicNameP = document.getElementById('musicNameP');  //显示歌曲名称标签
 
-    let musicShowBtn = document.getElementById('musicShowBtn');      //播放列表是否显示按钮
-    let musicListBox = document.getElementById('musicListBox');      //播放列表块
+    //有关歌曲列表的两个对象
+    let musicShowBtn = document.getElementById('musicShowBtn');      //歌曲列表是否显示按钮
+    let musicListBox = document.getElementById('musicListBox');      //歌曲列表块
+
+    //控制部分的五个对象
+    let showSpeed = document.getElementById('showSpeed');    //播放速度显示标签
+    let playBtn = document.getElementById('playBtn');        //播放按钮
+    let backBtn = document.getElementById('backBtn');        //播放速度减小按钮
+    let forwardBtn = document.getElementById('forwardBtn');  //播放速度增大按钮
+    let loopBtn = document.getElementById('loopBtn');        //是否循环播放按钮
 
     let lyricBox = document.getElementById('lyricBox');              //滚动歌词块
 
+    //进度条部分的五个对象
     let beginTimeText = document.getElementById('beginTimeText');    //歌曲开始播放时间标签
     let endTimeText = document.getElementById('endTimeText');        //歌曲开始播放时间标签
+    let progressBox = document.getElementById('progressBox');        //进度条容器
+    let bar = document.getElementById('bar');                        //进度条
+    let barHeader = document.getElementById('barHeader');            //进度条头部
 
-    let progressBox = document.getElementById('progressBox');    //进度条容器
-    let bar = document.getElementById('bar');                    //进度条
-    let barHeader = document.getElementById('barHeader');        //进度条头部
-
-    let loading = document.getElementById('loading');            //加载图标
-
+    let loading = document.getElementById('loading');            //歌曲加载时显示的图标
 
     //当前歌曲的索引
     let index = 0;
     //当前歌词列表中的每一句歌词的索引
     let indexLi = 0;
-    //进度条容器宽度
-    let progressBoxWidth = progressBox.offsetWidth;
-
+    //歌曲播放速度（最小0.2；最大3.0）
+    let speed = 1.0;
+    //循环模式的索引
     let loopType = 0;   //0:不循环; 1:单曲循环; 2:列表循环; 
+    
 
-    //创建audio对象
+    //创建audio对象，并放入网页中
     let audio = document.createElement('audio');
     document.body.appendChild(audio);
 
@@ -51,7 +55,8 @@ window.onload = function () {
         //加载歌曲
         audio.load();
 
-        //audio.playbackRate = 1.0;
+        audio.playbackRate = speed;
+        showSpeed.innerHTML = (speed==1||speed==2||speed==3?speed+'.0':speed)+'x';
     }
 
     //音频文件开始加载事件
@@ -149,8 +154,8 @@ window.onload = function () {
             }
         }
         //处理进度条
-        bar.style.width = currentTime / sumTime * progressBoxWidth + 'px';
-        barHeader.style.left = currentTime / sumTime * progressBoxWidth - 7 + 'px';
+        bar.style.width = currentTime / sumTime * progressBox.offsetWidth + 'px';
+        barHeader.style.left = currentTime / sumTime * progressBox.offsetWidth - 7 + 'px';
         beginTimeText.innerHTML = timeConvert(currentTime);
 
         //处理歌词块：当前歌词中的li的索引不能超过当前歌词中的li的最大索引。
@@ -299,30 +304,24 @@ window.onload = function () {
         }
     }
 
-    //避免用户快速频繁的点击前进与后退按钮的指示变量
-    let backFlag = 0;
-    let forwardFlag = 0;
-    //后退按钮
-    backBtn.onclick = function () {
-        if(backFlag==0){
-            backFlag=1;
-            if (audio.currentTime - 5 >= 0) {
-                audio.currentTime -= 5;
-            }
-            backOrforwardresetLyric();
-            backFlag=0;
-        }
+    //后退按钮（播放速度）
+    backBtn.onclick = function(){
+        setSpeed(-0.1);
     }
-    //前进按钮
-    forwardBtn.onclick = function () {
-        if(forwardFlag==0){
-            forwardFlag=1;
-            if (audio.currentTime + 5 < audio.duration) {
-                audio.currentTime += 5;
-            }
-            backOrforwardresetLyric();
-            forwardFlag=0;
+    //前进按钮（播放速度）
+    forwardBtn.onclick = function(){
+        setSpeed(0.1);
+    }
+    function setSpeed(change){
+        //浮点运算时容易出现 1.1000000000001的情况，所以截取小数点一位（toFixed是四舍五入）
+        speed = (audio.playbackRate+change).toFixed(1);
+        if(speed>=3){
+            speed = 3.0;
+        }else if(speed<=0.2){
+            speed = 0.2;
         }
+        audio.playbackRate = speed;
+        showSpeed.innerHTML = speed+'x';
     }
         
     function backOrforwardresetLyric(){
@@ -350,7 +349,7 @@ window.onload = function () {
         bar.style.width = w+'px';
         barHeader.style.left = w-7+'px';
         //设置当前音乐播放位置（当前音乐播放时间=(进度条长度/进度条总长度*音乐总时长)）
-        audio.currentTime = (w/progressBoxWidth)*audio.duration;
+        audio.currentTime = (w/progressBox.offsetWidth)*audio.duration;
         //设置歌词位置
         backOrforwardresetLyric();
     }
@@ -367,7 +366,7 @@ window.onload = function () {
         bar.style.width = w+'px';
         barHeader.style.left = w-7+'px';
         //设置当前音乐播放位置（当前音乐播放时间=(进度条长度/进度条总长度*音乐总时长)）
-        audio.currentTime = (w/progressBoxWidth)*audio.duration;
+        audio.currentTime = (w/progressBox.offsetWidth)*audio.duration;
         //设置歌词位置
         backOrforwardresetLyric();
     }
