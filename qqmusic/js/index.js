@@ -332,7 +332,9 @@ window.onload = function () {
     barHeader.ontouchmove = function(event){
         w = event.touches[0].pageX-progressBox.offsetLeft;
         bar.style.width = w+'px';
-        barHeader.style.left = w-7+'px';   
+        barHeader.style.left = w-7+'px'; 
+        //ontouchmove事件中阻止默认事件  
+        event.preventDefault();    
     }
     barHeader.ontouchend = function(event){
         bar.style.width = w+'px';
