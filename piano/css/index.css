@@ -16,7 +16,7 @@ body{
 ul{
     list-style: none;
     width: 60vw;
-    height: 100vh;
+    height: 96vh;
 
     display: flex;
     flex-direction: column;
