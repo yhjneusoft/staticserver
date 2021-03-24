@@ -2,6 +2,7 @@ let liArr = document.getElementsByTagName('ul')[0].getElementsByTagName('li');
 
 let audio = document.createElement('audio');
 document.body.appendChild(audio);
+audio.src = './music/1.MP3';
 
 for(let i=0;i<liArr.length;i++){
     liArr[i].ontouchstart = function(){
