@@ -21,7 +21,7 @@ ul{
     display: flex;
     flex-direction: column;
     margin-right: 2vw;
-}
+} 
 ul li{
     flex: 1;
     box-sizing: border-box;
