@@ -41,7 +41,7 @@
         }
 
         .low::after {
-            content: '..';
+            content: '...';
             position: absolute;
             left: 0;
             bottom: 10px;
@@ -50,7 +50,7 @@
         }
 
         .high::after { 
-            content: '..';
+            content: '...';
             position: absolute;
             left: 0;
             bottom: 45px;
@@ -179,7 +179,7 @@
         */
         let liArr = document.getElementsByTagName('ul')[0].getElementsByTagName('li');
         for(let i=0;i<liArr.length;i++){
-            liArr[i].onclick = function(){
+            liArr[i].ontouchstart = function(){
                 makeSound(i);
             }
         }
