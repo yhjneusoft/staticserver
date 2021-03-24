@@ -68,6 +68,7 @@
         <li key='5' class="low"><span>5</span></li>
         <li key='6' class="low"><span>6</span></li>
         <li key='7' class="low"><span>7</span></li>
+        
         <li key='q'><span>1</span></li>
         <li key='w'><span>2</span></li>
         <li key='e'><span>3</span></li>
@@ -87,7 +88,7 @@
     <script src="./js/makeSound.js"></script>
 
     <script>
-        
+        /*
         //点击钢琴样式改变
         function changeColor(li) {
 
@@ -96,6 +97,7 @@
                 li.style.background = '#fff';
             }, 100)
         }
+
 
         var container = document.getElementsByClassName('container')[0];
 
@@ -113,10 +115,14 @@
             }
 
             changeColor(li);
+
             //获得钢琴是第几键
-            var index = getIndex(li);
+            //li = e.target;
+            var index = getIndex(e.target);
+            console.log(index);
             makeSound(index);
         }
+        
 
 
         window.onkeydown = function (e) {
@@ -142,7 +148,7 @@
             return children.indexOf(li);
         }
 
-        /*
+      
         let ctx;
         let sounds = [130, 147, 165, 175, 196, 220, 246, 262, 294, 330, 349, 392, 440, 494,
             523, 587, 659, 698, 784, 880, 988, 1047];
@@ -171,6 +177,12 @@
             g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
         }
         */
+        let liArr = document.getElementsByTagName('ul')[0].getElementsByTagName('li');
+        for(let i=0;i<liArr.length;i++){
+            liArr[i].onclick = function(){
+                makeSound(i);
+            }
+        }
     </script>
 </body>
 
