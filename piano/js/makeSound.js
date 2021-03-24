@@ -1,4 +1,5 @@
-let ctx;
+// 获得音频上下文
+let ctx = new AudioContext();
 //let sounds = [130, 147, 165, 175, 196, 220, 246, 262, 294, 330, 349, 392, 440, 494, 523, 587, 659, 698, 784, 880, 988, 1047];
 let sounds = [262, 294, 330, 349, 392, 440, 494, 523, 587, 659, 698, 784, 880, 988];
 
@@ -8,7 +9,6 @@ function setContent() {
     }
 }
 function makeSound(index) {             // 钢琴传入是钢琴的第几个按键
-    setContent();                       // 获得音频上下文
     var osc = ctx.createOscillator();   //获得音频振荡器
     var g = ctx.createGain();           //得到音量控制对象
     osc.connect(g);                     // 连接振荡器和音量控制对象
