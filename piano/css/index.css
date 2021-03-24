@@ -31,7 +31,7 @@ ul li{
     background-color: #409EFF;
 
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     color: #fff;
 }
@@ -85,4 +85,12 @@ ul li span{
     width: 10px;
     height: 10px;
     text-align: center;
+    margin-right: 6vw;
+    position: relative;
+}
+ul .high span::before{
+    content: ".";
+    position: absolute;
+    left:3px;
+    bottom: 5px;
 }
