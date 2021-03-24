@@ -11,13 +11,6 @@
 
 <body>
     <ul>
-        <li class="low"></li>
-        <li class="low"></li>
-        <li class="low"></li>
-        <li class="low"></li>
-        <li class="low"></li>
-        <li class="low"></li>
-        <li class="low"></li>
         <li></li>
         <li></li>
         <li></li>
@@ -25,13 +18,6 @@
         <li></li>
         <li></li>
         <li></li>
-        <li class="high"></li>
-        <li class="high"></li>
-        <li class="high"></li>
-        <li class="high"></li>
-        <li class="high"></li>
-        <li class="high"></li>
-        <li class="high"></li>
     </ul>
 
     <script src="./js/makeSound.js"></script>
@@ -129,7 +115,7 @@
         let liArr = document.getElementsByTagName('ul')[0].getElementsByTagName('li');
         for(let i=0;i<liArr.length;i++){
             liArr[i].ontouchstart = function(){
-                makeSound(i);
+                makeSound(6-i);    //低音在前
             }
         }
     </script>
