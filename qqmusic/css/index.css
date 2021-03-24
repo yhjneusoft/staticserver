@@ -144,7 +144,12 @@ html,body,.container{
     flex: 1;
     font-size: 3.2vw;
     color: #888;
-    text-align: center;
+}
+.container .progress .begin{
+    text-align: left;
+}
+.container .progress .end{
+    text-align: right;
 }
 .container .progress .progress-box{
     flex: 6;
@@ -154,24 +159,22 @@ html,body,.container{
     position: relative;
 }
 .container .progress .progress-box .bar{
-    width: 50%;
+    width: 0%;
     height: 0.7vw;
     background-color:#2FC27D;
 }
 .container .progress .progress-box .bar-header{
-    width: 4vw;
-    height: 4vw;
+    width: 14px;
+    height: 14px;
     background-color:#2FC27D;
-    border-radius: 2vw;
+    border-radius: 7px;
 
     position: absolute;
-    left: 50%;
+    left: 0;
     top: -1.7vw;
 
     user-select: none;
     cursor: pointer;
-
-    display: none;
 }
 
 /************************ controller 控制台 ***********************/
@@ -194,6 +197,9 @@ html,body,.container{
 .container .controller div p{
     user-select: none;
     cursor: pointer;
+}
+.container .controller div:nth-child(1) p{
+    font-size: 3vw;
 }
 .container .controller div:nth-child(2) p,.container .controller div:nth-child(4) p{
     width: 10vw;
@@ -218,20 +224,40 @@ html,body,.container{
     justify-content: center;
     align-items: center;
 }
-.container .controller div:nth-child(5) p{
-    width: 10vw;
-    height: 6vw;
+.container .controller div:nth-child(5) p{   
     font-size: 3vw;
     border-radius: 3vw;
     box-sizing: border-box;
+    padding: 0.3vw 1.4vw;
+    margin-right: 2.2vw;
 
     color: #888;
     border: solid 1px #888;
     user-select: none;
     cursor: pointer;
+}
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/************************ loading 加载图标 ***********************/
+.container .fa-spinner{
+    font-size: 12vw;
+    color: #fff;
+    opacity: 0.6;
+    position: absolute;
+    left: 45vw;
+    top:40vh;
+    display: none;
+
+    /* 应用动画。 linear：线性 */
+	animation: move1 2s linear infinite;
+}
+
+/* 创建动画规则move1,360度旋转 */
+@keyframes move1 {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 

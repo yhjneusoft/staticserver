@@ -35,12 +35,14 @@
             <div class="begin" id="beginTimeText"></div>
             <div class="progress-box" id="progressBox">
                 <div class="bar" id="bar"></div>
-                <div class="bar-header"></div>
+                <div class="bar-header" id="barHeader"></div>
             </div>
             <div class="end" id="endTimeText"></div>
         </div>
         <div class="controller">
-            <div></div>
+            <div>
+                <p id="showSpeed">1.0x</p>
+            </div>
             <div>
                 <p id="backBtn"><i class="fa fa-step-backward"></i></p>
             </div>
@@ -51,9 +53,10 @@
                 <p id="forwardBtn"><i class="fa fa-step-forward"></i></p>
             </div>
             <div>
-                <p id="loopBtn">循环</p>
+                <p id="loopBtn">不循环</p>
             </div>
         </div>
+        <i class="fa fa-spinner" id="loading"></i>
     </div>
     <script src="./js/lyric.js"></script>
     <script src="./js/index.js"></script>

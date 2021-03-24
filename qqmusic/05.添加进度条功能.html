@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ音乐</title>
+    <link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <i class="fa fa-music"></i>
+            <p id="musicNameP">送你一朵小红花</p>
+            <i class="fa fa-navicon" id="musicShowBtn"></i>
+            <div class="music" id="musicListBox">
+                <ul>
+                    <!-- 动态数据 -->
+                </ul>
+            </div>
+        </header>
+        <div class="lyric">
+            <ul>
+                <li>送你一朵小红花</li>
+                <li>作词：赵英俊</li>
+                <li>作曲：赵英俊</li>
+                <li>演唱：赵英俊</li>
+                <li>送你一朵小红花</li>
+                <li>开在你昨天新长的枝桠</li>
+                <li>奖励你有勇气 主动来和我说话</li>
+            </ul>
+        </div>
+        <div class="logo">
+            <img src="" id="logoImg">
+        </div>
+        <div class="progress">
+            <div class="begin" id="beginTimeText"></div>
+            <div class="progress-box" id="progressBox">
+                <div class="bar" id="bar"></div>
+                <div class="bar-header" id="barHeader"></div>
+            </div>
+            <div class="end" id="endTimeText"></div>
+        </div>
+        <div class="controller">
+            <div></div>
+            <div>
+                <p><i class="fa fa-step-backward"></i></p>
+            </div>
+            <div>
+                <p id="playBtn"><i class="fa fa-play"></i></p>
+            </div>
+            <div>
+                <p><i class="fa fa-step-forward"></i></p>
+            </div>
+            <div>
+                <p id="loopBtn">不循环</p>
+            </div>
+        </div>
+        <i class="fa fa-spinner" id="loading"></i>
+    </div>
+    <!-- 加载歌曲信息 -->
+    <script src="./js/lyric.js"></script>
+    <script>
+        window.onload = function () {
+
+            let playBtn = document.getElementById('playBtn');        //播放按钮对象
+            let playBtnIcon = playBtn.getElementsByTagName('i')[0];  //播放按钮对象中的小图标对象
+            let loading = document.getElementById('loading');        //加载音乐未完成时的图标对象
+            let logoImg = document.getElementById('logoImg');        //歌曲对应的图片对象
+            let musicNameP = document.getElementById('musicNameP');  //头部显示歌曲名称对象
+
+            //当前歌曲的索引（musicArr数组的索引；musicArr数组在 lyric.js 文件中）
+            let index = 0;
+
+            //创建audio对象，并添加到页面中
+            let audio = document.createElement('audio');
+            document.body.appendChild(audio);
+
+            //初始化audio对象
+            init();
+
+            function init() {
+                //audio播放歌曲初始化
+                audio.src = './music/' + musicArr[index].url;
+                //加载歌曲
+                audio.load();
+            }
+
+            //audio对象事件：音频文件开始加载事件
+            audio.onloadstart = function () {
+                loading.style.display = 'block';     //显示正在加载图标
+            }
+            //audio对象事件：指定视频/音频(audio/video)的元数据加载完毕事件
+            audio.onloadedmetadata = function () {
+                //歌曲名称初始化
+                musicNameP.innerHTML = musicArr[index].name;
+                //歌曲对应图片初始化
+                logoImg.src = './img/' + musicArr[index].img;
+                //歌曲加载完毕之后，加载图标隐藏
+                loading.style.display = 'none';
+                //列表循环播放时的处理
+                if(loopType==2){
+                    audio.play();
+                    playBtnIcon.className = 'fa fa-pause';
+                }
+
+                //歌曲播放时间初始化
+                beginTimeText.innerHTML = '00:00';
+                endTimeText.innerHTML = timeConvert(audio.duration);
+                //进度条初始化
+                bar.style.width = '0px';
+                barHeader.style.left = '-7px';
+            };
+            //歌曲播放完毕事件（audio.loop=true时不会触发此事件）
+            audio.onended = function () {
+                playBtnIcon.className = 'fa fa-play';
+                //列表循环播放时的处理
+                if(loopType==2){
+                    index++;
+                    if(index>=musicArr.length){
+                        index=0;
+                    }
+                    init();
+                }
+                //重置进度条
+                resetBar();
+            };
+
+            //开始播放按钮点击事件：chrome等高版本浏览器禁止页面加载时播放，所以必须要在事件中播放
+            playBtn.onclick = function (event) {
+                //播放按钮在"播放"与"暂停"之间切换
+                if (playBtnIcon.className == 'fa fa-play') {
+                    audio.play();
+                    playBtnIcon.className = 'fa fa-pause';
+                } else {
+                    audio.pause();
+                    playBtnIcon.className = 'fa fa-play';
+                }
+                event.stopPropagation();
+            }
+
+            /**************************** 03.添加切换歌曲功能 ****************************/
+
+            let musicShowBtn = document.getElementById('musicShowBtn');      //播放列表是否显示按钮
+            let musicListBox = document.getElementById('musicListBox');      //播放列表块
+
+            //给歌曲列表添加数据
+            let musicListStr = '';
+            for (let i = 0; i < musicArr.length; i++) {
+                musicListStr += '<li>' + musicArr[i].name + '</li>'
+            }
+            musicListBox.getElementsByTagName('ul')[0].innerHTML = musicListStr;
+
+            //是否显示播放列表按钮事件
+            musicShowBtn.onclick = function (event) {
+                if (musicListBox.style.display == 'block') {
+                    musicListBox.style.display = 'none';
+                } else {
+                    musicListBox.style.display = 'block';
+                }
+                event.stopPropagation();
+            }
+            //点击页面上任何其它位置，播放列表都隐藏
+            document.onclick = function () {
+                musicListBox.style.display = 'none';
+            }
+
+            //点击播放列表中的li时的事件
+            let liArr = musicListBox.getElementsByTagName('li');
+            for (let i = 0; i < liArr.length; i++) {
+                //（切换歌曲按钮事件）播放列表中的每一个选项按钮事件
+                liArr[i].onclick = function (event) {
+                    index = i;
+                    init();
+                    //歌曲列表块隐藏
+                    musicListBox.style.display = 'none';
+                    //切换歌曲后，播放按钮设置成play图标
+                    playBtnIcon.className = 'fa fa-play';
+                }
+            }
+
+            /**************************** 04.添加循环模式功能 ****************************/
+
+            let loopBtn = document.getElementById('loopBtn');        //是否循环播放按钮
+
+            let loopType = 0;   //0:不循环; 1:单曲循环; 2:列表循环; 
+
+            //是否循环播放按钮
+            loopBtn.onclick = function (event) {
+                if (loopType == 0) {
+                    //单曲循环设置       
+                    loopType = 1;
+                    audio.loop = true;
+                    loopBtn.style.color = '#fff';
+                    loopBtn.style.border = 'none';
+                    loopBtn.style.backgroundColor = '#2FC27D';
+                    loopBtn.innerHTML = '单曲循环';
+                } else if (loopType == 1) {
+                    //列表循环设置 
+                    loopType = 2;
+                    audio.loop = false;
+                    loopBtn.style.color = '#fff';
+                    loopBtn.style.border = 'none';
+                    loopBtn.style.backgroundColor = '#2FC27D';
+                    loopBtn.innerHTML = '列表循环';
+                } else if (loopType == 2) {
+                    //不循环设置 
+                    loopType = 0;
+                    audio.loop = false;
+                    loopBtn.style.color = '#888';
+                    loopBtn.style.border = 'solid 1px #888';
+                    loopBtn.style.backgroundColor = '';
+                    loopBtn.innerHTML = '不循环';
+                }
+                event.stopPropagation();
+            };
+
+            /**
+             * 注意：在audio.onended事件与audio.onloadedmetadata事件中也有新代码
+             */
+
+            /**************************** 05.添加进度条功能 ****************************/ 
+            
+            let beginTimeText = document.getElementById('beginTimeText');    //歌曲开始播放时间标签
+            let endTimeText = document.getElementById('endTimeText');        //歌曲开始播放时间标签
+
+            let progressBox = document.getElementById('progressBox');    //进度条容器
+            let bar = document.getElementById('bar');                    //进度条
+            let barHeader = document.getElementById('barHeader');        //进度条头部
+
+            //歌曲播放过程中一直触发的事件（0.25秒触发一次）
+            audio.ontimeupdate = process;
+            function process() {
+                //当前播放时长
+                let currentTime = audio.currentTime;
+                //歌曲总时长
+                let sumTime = audio.duration;
+                //如果是循环播放，那么每次播放完毕后，进度条、歌词也要重置
+                if (audio.loop) {
+                    //循环播放时，每次结束时间并不能精确等于总时长，所以要留出0.33秒。
+                    if (currentTime >= sumTime - 0.33) {
+                        //重置进度条
+                        resetBar();
+                    }
+                }
+                //处理进度条
+                bar.style.width = currentTime / sumTime * progressBoxWidth + 'px';
+                barHeader.style.left = currentTime / sumTime * progressBoxWidth - 7 + 'px';
+                beginTimeText.innerHTML = timeConvert(currentTime);
+            }
+
+            //重置进度条及播放时间
+            function resetBar() {
+                beginTimeText.innerHTML = '00:00';
+                bar.style.width = '0px';
+                barHeader.style.left = '-7px';
+            }
+       
+            //时间转换（xx.xxxxx秒 => 00:00）
+            function timeConvert(time) {
+                //分
+                let minutes = parseInt(time / 60);
+                minutes = minutes<10?'0'+minutes:minutes;
+                //秒
+                let seconds = Math.round(time % 60);  //返回最接近的整数
+                seconds = seconds<10?'0'+seconds:seconds;
+                return minutes + ':' + seconds;
+            }
+
+            
+            /**
+             * 注意：在audio.onended事件与audio.onloadedmetadata事件中也有新代码
+             */
+        }
+    </script>
+
+</body>
+
+</html>
