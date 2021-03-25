@@ -35,7 +35,6 @@ html,body,.container{
 }
 .container .control-box .add-input{
     width: 100%;
-    height: 174px;
     margin: 0 auto;
     border-radius: 5px;
     background-color: #53A8FF;
@@ -56,7 +55,6 @@ html,body,.container{
 
 .container .control-box .add-input .data-box{
     width: 100%;
-    height: 60px;
     background-color: #e5e5e5;
     margin-bottom: 10px;
     color: #333;
@@ -69,7 +67,6 @@ html,body,.container{
 
 .container .control-box .each{
     width: 100%;
-    height: 140px;
     margin: 0 auto;
     border-radius: 5px;
     background-color: #53A8FF;
@@ -87,8 +84,6 @@ html,body,.container{
 }
 .container .control-box .each .order-box{
     width: 100%;
-    height: 60px;
     background-color: #e5e5e5;
-    margin-bottom: 10px;
     color: #333;
 }
