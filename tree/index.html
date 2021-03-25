@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>-->
+    <script type="text/javascript" src="./echarts.min.js"></script>
+    <title>树</title>
+    <style>
+        html,
+        body,
+        #container {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+
+    <script>
+        let data = {
+            name: "root",
+            value: 100,
+            children: [
+                {
+                    name: "left1",
+                    value: 100,
+                    children: [
+                        {
+                            name: "left2",
+                            value: 200
+                        },
+                        {
+                            name: "right2",
+                            value: 200
+                        }
+                    ]
+                },
+                {
+                    name: "right1",
+                    value: 100,
+                    children: [
+                        {
+                            name: "left2",
+                            value: 200
+                        },
+                        {
+                            name: "right2",
+                            value: 200
+                        }
+                    ]
+                }
+            ]
+        }
+
+        let dom = document.getElementById("container");
+        let myChart = echarts.init(dom);
+
+        myChart.setOption({
+            //显示节点信息的配置
+            tooltip: {
+                trigger: 'item',             //显示节点信息
+                triggerOn: 'mousemove'       //鼠标移入时显示节点信息
+            },
+            series: [
+                {
+                    type: 'tree',            //图表类型
+                    data: [data],            //图表数据（json）
+                    left: '0',               //图表坐标
+                    right: '0',
+                    top: '100px',
+                    bottom: '100px',
+
+                    symbolSize: 17,         //标记的大小，就是那个小圆圈，默认7
+                    orient: 'vertical',     //图表方向（这里设置为垂直方向）
+                    expandAndCollapse: true,//节点是否可展开和折叠（默认为true）
+
+                    //节点所对应的标签的样式
+                    label: {
+                        position: 'left',            //标签的位置
+                        verticalAlign: 'middle',     //文字垂直对齐方式，默认自动。
+                        align: 'right',              //文字水平对齐方式，默认自动。
+                        fontSize: 16
+                    },
+                    //叶子节点的特殊配置
+                    leaves: {
+                        label: {
+                            //position: 'bottom',
+                        }
+                    }
+                }
+            ]
+        });
+    </script>
+</body>
+
+</html>
