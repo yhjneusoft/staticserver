@@ -30,9 +30,9 @@ class BST {
             this.size++;
             return new Node(val)
         }
-        if (node.val>val) {
+        if (parseInt(node.val)>parseInt(val)) {
             node.left = this.addNode(node.left, val)
-        } else if (node.val<val) {
+        } else if (parseInt(node.val)<parseInt(val)) {
             node.right = this.addNode(node.right, val)
         }
         return node;
@@ -40,42 +40,48 @@ class BST {
 
     // 二分搜索树的前序遍历
     preOrder() {
-        this.preOrderNode(this.root)
+        let arr = new Array();
+        this.preOrderNode(this.root,arr);
+        return arr;
     }
-    preOrderNode(node) {
+    preOrderNode(node,arr) {
         if (node === null) {
             return;
         }
         // 重点是这个 console 的位置
-        console.log(node.val)
-        this.preOrderNode(node.left)
-        this.preOrderNode(node.right)
+        arr.push(node.val);
+        this.preOrderNode(node.left,arr);
+        this.preOrderNode(node.right,arr);
     }
 
     // 二分搜索树的中序遍历
     inOrder() {
-        this.inOrderNode(this.root)
+        let arr = new Array();
+        this.inOrderNode(this.root,arr);
+        return arr;
     }
-    inOrderNode(node) {
+    inOrderNode(node,arr) {
         if (node === null) {
             return;
         }
-        this.inOrderNode(node.left)
-        console.log(node.val)
-        this.inOrderNode(node.right)
+        this.inOrderNode(node.left,arr);
+        arr.push(node.val);
+        this.inOrderNode(node.right,arr);
     }
 
     // 二分搜索树的后序遍历
     postOrder() {
-        this.postOrderNode(this.root)
+        let arr = new Array();
+        this.postOrderNode(this.root,arr);
+        return arr;
     }
-    postOrderNode(node) {
+    postOrderNode(node,arr) {
         if (node === null) {
             return;
         }
-        this.postOrderNode(node.left)
-        this.postOrderNode(node.right)
-        console.log(node.val)
+        this.postOrderNode(node.left,arr);
+        this.postOrderNode(node.right,arr);
+        arr.push(node.val);
     }
 
     //将二分搜索树转换为echarts可以使用的json数据

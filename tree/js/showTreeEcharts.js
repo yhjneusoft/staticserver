@@ -15,8 +15,8 @@ function showTreeEcharts(id, data) {
                 data: [data],            //图表数据（json）
                 left: '0',               //图表坐标
                 right: '0',
-                top: '100px',
-                bottom: '100px',
+                top: '60px',
+                bottom: '60px',
 
                 symbolSize: 17,           //标记的大小，就是那个小圆圈，默认7
                 orient: 'vertical',       //图表方向（这里设置为垂直方向）

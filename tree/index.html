@@ -5,38 +5,98 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/index.css">
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>-->
     <script type="text/javascript" src="./js/echarts.min.js"></script>
     <title>树</title>
-    <style>
-        html,
-        body,
-        #container {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
 </head>
 
 <body>
-    <div id="container"></div>
+    <div class="container">
+        <div class="echarts-box" id="echartsBox"></div>
+        <div class="control-box">
+            <div class="add-input">
+                <div class="header">
+                    <h4>随机添加数据</h4>
+                    <div class="btn add-btn" id="addRandomBtn">添加</div>
+                    <div class="btn clear-btn" id="clearRandomBtn">清空</div>
+                </div>
+                <div class="data-box" id="inputDataRandomBox"></div>
+                <div class="btn create-bst-btn" id="createBstRandomBtn">生成二叉搜索树</div>
+            </div>
+            <div class="each">
+                <div class="header">
+                    <div class="btn each-btn" id="preorderBtn">前序遍历</div>
+                    <div class="btn each-btn" id="orderMiddleBtn">中序遍历</div>
+                    <div class="btn each-btn" id="postscriptBtn">后序遍历</div>
+                </div>
+                <div class="order-box" id="orderBox"></div>
+            </div>
+        </div>
+    </div>
 
     <script src="./js/showTreeEcharts.js"></script>
     <script src="./js/bst.js"></script>
     <script>
-        let arr = [47, 49, 41, 69, 74, 12, 58, 55, 69, 41];
+        let addRandomBtn = document.getElementById('addRandomBtn');
+        let clearRandomBtn = document.getElementById('clearRandomBtn');
+        let inputDataRandomBox = document.getElementById('inputDataRandomBox');
+        let createBstRandomBtn = document.getElementById('createBstRandomBtn');
+
+        let preorderBtn = document.getElementById('preorderBtn');
+        let orderMiddleBtn = document.getElementById('orderMiddleBtn');
+        let postscriptBtn = document.getElementById('postscriptBtn');
+        let orderBox = document.getElementById('orderBox');
 
         //创建二分搜索树
         let bst = new BST();
-        //向二分搜索树中添加数据
-        for (let i = 0; i < arr.length; i++) {
-            bst.add(arr[i]);
+
+        //随机添加数据事件
+        addRandomBtn.onclick = ()=>{
+            let len = prompt("请输入随机生成数组的长度：");
+            if(isNaN(len)){
+                alert('输入的长度必须为一个整数！');
+            }else{
+                let str = Math.floor((Math.random()*100));
+                for(let i=1;i<len;i++){
+                    str += '，' + Math.floor((Math.random()*100));
+                }
+                inputDataRandomBox.innerHTML = str;
+            }
+        }
+        //随机清空数据事件
+        clearRandomBtn.onclick = ()=>{
+            inputDataRandomBox.innerHTML = '';
+        }
+        //随机添加数据后的生成二叉搜索树事件
+        createBstRandomBtn.onclick = ()=>{
+            createBst(inputDataRandomBox);
         }
 
-        let data = bst.getEchartsData();
-        showTreeEcharts('container', data);
+        //生成二叉搜索树
+        function createBst(obj){
+            bst = new BST();
+            let arr = obj.innerHTML.split('，');
+            //向二分搜索树中添加数据
+            for (let i = 0; i < arr.length; i++) {
+                bst.add(arr[i]);
+            }
+            let data = bst.getEchartsData();
+            showTreeEcharts('echartsBox', data);
+        }
+
+        preorderBtn.onclick = ()=>{
+            let arr = bst.preOrder();
+            orderBox.innerHTML = arr.join("，");
+        }
+        orderMiddleBtn.onclick = ()=>{
+            let arr = bst.inOrder();
+            orderBox.innerHTML = arr.join("，");
+        }
+        postscriptBtn.onclick = ()=>{
+            let arr = bst.postOrder();
+            orderBox.innerHTML = arr.join("，");
+        }
     </script>
 
 </body>
