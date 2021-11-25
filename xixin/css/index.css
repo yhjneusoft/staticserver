@@ -1,0 +1,286 @@
+/****************** 总容器 ******************/
+.wrapper{
+	width: 100%;
+    background-color: #F9F9F9;
+}
+
+/****************** header ******************/
+header{
+    width: 100%;
+	height: 15.7vw;
+    background-color: #FFF;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+header .header-content{
+    width: 100%;
+	height: 14.2vw;
+    background-color: #FFF;
+
+	display: flex;
+    justify-content: space-between;
+	align-items: center;
+}
+header .header-content .header-content-left{
+    display: flex;
+	align-items: center;
+}
+header .header-content .header-content-left h1{
+    font-size: 5vw;
+    font-weight: 500;
+    margin-left: 3.6vw;
+    letter-spacing: 0.4vw;
+}
+header .header-content .header-content-left .fa-angle-down{
+    font-size: 6vw;
+    margin-left: 2vw;
+}
+header .header-content .fa-envelope-o{
+    font-size: 5.6vw;
+    margin-right: 3.6vw;
+}
+header .header-bottom{
+    width: 100%;
+	height: 1.5vw;
+    background-color: #F9F9F9;
+}
+/****************** nav ******************/
+nav{
+    width: 100%;
+	height: 125.7vw;
+	background-color: #FFF;
+    margin-bottom: 3vw;
+    overflow: hidden;
+}
+nav .logo-img{
+    width:92.8vw;
+    height: 28vw;
+    margin: 0 auto;
+    margin-top: 3.6vw;
+}
+nav .logo-img img{
+    width:92.8vw;
+    height: 28vw;
+}
+nav ul{
+    width:92.8vw;
+    margin: 0 auto;
+    margin-top: 11vw;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+nav ul li{
+    width:45.5vw;
+    height: 19.8vw;
+
+    box-sizing: border-box;
+    padding-top: 3vw;
+
+    border: solid 1px #EFEFEF;
+    /*只有下部有阴影*/
+    box-shadow: 0 2px 0 rgba(0,0,0,.04);  
+    border-radius: 1vw;
+    margin-bottom: 1vw;
+
+    display: flex;
+}
+/* 下面第三个menu项中有一张图片，这里使用子选择器，是为了不影响它 */
+nav ul li > img{
+    width:36px;
+    height: 36px;
+    margin: 0 1.4vw;
+}
+nav ul li .nav-item-text h3{
+    font-size: 4.8vw;
+    font-weight: 500;
+    margin-bottom: 1vw;
+}
+nav ul li .nav-item-text p{
+    font-size: 3.4vw;
+    color: #888;
+}
+/* 第三个menu项比较特殊，文字需要单独设置 */
+nav ul li .nav-item-text .menu3-h3-span{
+    font-size: 6vw;
+}
+nav ul li .nav-item-text .menu3-text-img{
+    width: 31vw;
+    height: 3.6vw;
+}
+
+/****************** report（我的健康报告） ******************/
+.report{
+    width: 100%;
+	height: 32vw;
+	background-color: #FFF;
+    margin-bottom: 3vw;
+}
+
+.report .report-content{
+    width: 100%;
+	height: 19vw;
+    box-sizing: border-box;
+    padding: 0 3.6vw;
+
+    font-size: 4.3vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.report .report-content > div{
+    font-size: 3.6vw;
+    color: #FFF;
+    padding: 1.6vw 3vw;
+    background-color: #127A90;
+    border-radius: 2vw;
+
+    user-select: none;
+    cursor: pointer;
+}
+/****************** doctor（推荐医生） ******************/
+.doctor{
+    width: 100%;
+	height: 79vw;
+	background-color: #FFF;
+    margin-bottom: 3vw;
+}
+.doctor ul{
+    width: 100%;
+    height: 66vw;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+.doctor ul li{
+    width: 22vw;
+    height: 28vw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    user-select: none;
+    cursor: pointer;
+}
+.doctor ul li img{
+    width: 14vw;
+    height: 14vw;
+    border-radius: 7vw;
+    margin-bottom: 1.8vw;
+}
+.doctor ul li h3{
+    font-size: 4vw;
+    font-weight: 500;
+    margin-bottom: 1.8vw;
+}
+.doctor ul li p{
+    font-size: 3vw;
+    color: #888;
+}
+/****************** assess（健康评估） ******************/
+.assess{
+    width: 100%;
+	height: 43vw;
+	background-color: #FFF;
+    margin-bottom: 3vw;
+}
+.assess .assess-content{
+    width: 100%;
+	height: 30vw;
+    box-sizing: border-box;
+    padding: 3.6vw;
+    padding-right: 0vw;
+}
+.assess .assess-content .scroll-box{
+    width: 100%;
+    height: 22.8vw;
+    overflow: hidden;
+    position: relative;
+}
+.assess .assess-content ul{
+    width: 270vw;
+    height: 22.8vw;
+    display: flex;
+    overflow: hidden;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.assess .assess-content ul li{
+    width: 41vw;
+	height: 22.8vw;
+    margin-right: 4vw;
+}
+.assess .assess-content ul li img{
+    width: 41vw;
+	height: 22.8vw;
+    display: block;
+}
+.assess .assess-content ul li img:last-child{
+    margin-right: 0;
+}
+
+/****************** info（健康资讯） ******************/
+.info{
+    width: 100%;
+	height: 10vw;
+	background-color: #FFF;
+}
+
+/****************** footer ******************/
+footer{
+    width: 100%;
+	height: 14.2vw;
+	background-color: #FFF;
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+/****************** common ******************/
+.top-ban{
+    width: 100%;
+	height: 15.7vw;
+}
+.bottom-ban{
+    width: 100%;
+	height: 14.2vw;
+}
+.item-title{
+    width: 100%;
+	height: 13vw;
+    box-sizing: border-box;
+    padding: 0 3.6vw;
+    border: solid 2px #F9F9F9;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.item-title p{
+    height: 4.3vw;
+    line-height: 4.3vw;
+
+    box-sizing: border-box;
+    padding-left: 3vw;
+
+    font-size: 4.3vw;
+    border-left: solid 2px #127A90;
+    letter-spacing: 0.2vw;
+}
+.item-title span{
+    font-size: 3vw;
+    color: #666;
+    user-select: none;
+    cursor: pointer;
+}
+
